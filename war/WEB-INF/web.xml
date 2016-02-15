@@ -13,12 +13,12 @@
   
   <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/codeweb_viz/greet</url-pattern>
+    <url-pattern>/codewebviz/greet</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>CodeWeb_Viz.html</welcome-file>
+    <welcome-file>CodeWebViz.html</welcome-file>
   </welcome-file-list>
 
 </web-app>

@@ -20,7 +20,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class CodeWeb_Viz implements EntryPoint
+public class CodeWebViz implements EntryPoint
 {
   /**
    * The message displayed to the user when the server cannot be reached or
