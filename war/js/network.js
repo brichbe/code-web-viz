@@ -7,40 +7,31 @@ function initNetwork(container) {
 	nodes = new vis.DataSet([ {
 		id : 0,
 		label : 'pkg.0',
-		color : 'DarkBlue',
-		font : {
-			color : 'white'
-		}
+		group: 0
 	}, {
 		id : 1,
 		label : 'pkg.1',
-		color : 'orange'
+		group: 1
 	}, {
 		id : 2,
 		label : 'pkg.2',
-		color : 'DarkViolet',
-		font : {
-			color : 'white'
-		}
+		group: 2
 	}, {
 		id : 3,
 		label : 'pkg.3',
-		color : 'lime'
+		group: 3
 	}, {
 		id : 4,
 		label : 'class.1',
-		color : 'orange'
+		group: 1
 	}, {
 		id : 5,
 		label : 'class.2',
-		color : 'DarkViolet',
-		font : {
-			color : 'white'
-		}
+		group: 2
 	}, {
 		id : 6,
 		label : 'class.3',
-		color : 'lime'
+		group: 3
 	}, ]);
 
 	edges = new vis.DataSet([ {
@@ -71,7 +62,25 @@ function initNetwork(container) {
 		autoResize : true,
 		clickToUse : false,
 		height : '100%',
-		width : '100%'
+		width : '100%',
+		nodes : {
+			shape : 'dot',
+			size : 30,
+			font : {
+				size : 32,
+				color : '#ffffff'
+			},
+			borderWidth : 2
+		},
+		edges : {
+			width : 2
+		},
+		physics : {
+			enabled: true,
+			stabilization: {
+				iterations: 1
+			}
+		}
 	};
 
 	network = new vis.Network(container, data, options);
