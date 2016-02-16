@@ -96,7 +96,7 @@ function initNetwork(container) {
 	};
 	var options = {
 		autoResize : true,
-		clickToUse: true,
+		clickToUse: false,
 		height : '100%',
 		width : '100%'
 	};
