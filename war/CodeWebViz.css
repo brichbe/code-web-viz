@@ -1,34 +1,25 @@
-/** Add css rules here for your application. */
+body {
+	background: url("images/gray_texture_bg.png") no-repeat center center
+		fixed !important;
+	-webkit-background-size: cover !important;
+	-moz-background-size: cover !important;
+	-o-background-size: cover !important;
+	background-size: cover !important;
+}
 
-
-/** Example rules used by the template application (remove for your app) */
 h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
+	font-size: 3em;
+	font-weight: bold;
+	font-family: monospace;
+	color: #112134;
+	margin: 40px 0px 40px;
+	text-align: center;
 }
 
-.sendButton {
-  display: block;
-  font-size: 16pt;
-}
-
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 400px;
-}
-
-.dialogVPanel {
-  margin: 5px;
-}
-
-.serverResponseLabelError {
-  color: red;
-}
-
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-  margin: 15px 6px 6px;
+#vizSourceStructureNetwork {
+	background-image: url("images/network_bg.png") !important;
+	background-repeat: no-repeat !important;
+	height: 600px;
+	border: 1px solid lightgray;
+	margin: 60px;
 }
