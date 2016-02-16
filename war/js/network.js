@@ -4,91 +4,64 @@ var nodes;
 var edges;
 
 function initNetwork(container) {
-	var nodes = [ {
+	nodes = new vis.DataSet([ {
+		id : 0,
+		label : 'pkg.0',
+		color : 'DarkBlue',
+		font : {
+			color : 'white'
+		}
+	}, {
 		id : 1,
-		label : 'Node 1',
+		label : 'pkg.1',
 		color : 'orange'
 	}, {
 		id : 2,
-		label : 'Node 2',
+		label : 'pkg.2',
 		color : 'DarkViolet',
 		font : {
 			color : 'white'
 		}
 	}, {
 		id : 3,
-		label : 'Node 3',
-		color : 'orange'
+		label : 'pkg.3',
+		color : 'lime'
 	}, {
 		id : 4,
-		label : 'Node 4',
-		color : 'DarkViolet',
-		font : {
-			color : 'white'
-		}
+		label : 'class.1',
+		color : 'orange'
 	}, {
 		id : 5,
-		label : 'Node 5',
-		color : 'orange'
-	}, {
-		id : 6,
-		label : 'cid = 1',
-		cid : 1,
-		color : 'orange'
-	}, {
-		id : 7,
-		label : 'cid = 1',
-		cid : 1,
+		label : 'class.2',
 		color : 'DarkViolet',
 		font : {
 			color : 'white'
 		}
 	}, {
-		id : 8,
-		label : 'cid = 1',
-		cid : 1,
+		id : 6,
+		label : 'class.3',
 		color : 'lime'
-	}, {
-		id : 9,
-		label : 'cid = 1',
-		cid : 1,
-		color : 'orange'
-	}, {
-		id : 10,
-		label : 'cid = 1',
-		cid : 1,
-		color : 'lime'
-	} ];
+	}, ]);
 
-	// create an array with edges
-	var edges = [ {
-		from : 1,
+	edges = new vis.DataSet([ {
+		from : 0,
+		to : 1
+	}, {
+		from : 0,
 		to : 2
 	}, {
-		from : 1,
+		from : 0,
 		to : 3
 	}, {
-		from : 10,
+		from : 1,
 		to : 4
 	}, {
 		from : 2,
 		to : 5
 	}, {
-		from : 6,
-		to : 2
-	}, {
-		from : 7,
-		to : 5
-	}, {
-		from : 8,
+		from : 3,
 		to : 6
-	}, {
-		from : 9,
-		to : 7
-	}, {
-		from : 10,
-		to : 9
-	} ];
+	} ]);
 
 	var data = {
 		nodes : nodes,
@@ -96,16 +69,18 @@ function initNetwork(container) {
 	};
 	var options = {
 		autoResize : true,
-		clickToUse: false,
+		clickToUse : false,
 		height : '100%',
 		width : '100%'
 	};
 
 	network = new vis.Network(container, data, options);
-	network.on("selectNode", function(params) {
+	network.on("doubleClick", function(params) {
 		if (params.nodes.length == 1) {
 			if (network.isCluster(params.nodes[0]) == true) {
 				network.openCluster(params.nodes[0]);
+			} else {
+				network.clusterByConnection(params.nodes[0]);
 			}
 		}
 	});
