@@ -4,55 +4,8 @@ var nodes;
 var edges;
 
 function initNetwork(container) {
-	nodes = new vis.DataSet([ {
-		id : 0,
-		label : 'pkg.0',
-		group: 0
-	}, {
-		id : 1,
-		label : 'pkg.1',
-		group: 1
-	}, {
-		id : 2,
-		label : 'pkg.2',
-		group: 2
-	}, {
-		id : 3,
-		label : 'pkg.3',
-		group: 3
-	}, {
-		id : 4,
-		label : 'class.1',
-		group: 1
-	}, {
-		id : 5,
-		label : 'class.2',
-		group: 2
-	}, {
-		id : 6,
-		label : 'class.3',
-		group: 3
-	}, ]);
-
-	edges = new vis.DataSet([ {
-		from : 0,
-		to : 1
-	}, {
-		from : 0,
-		to : 2
-	}, {
-		from : 0,
-		to : 3
-	}, {
-		from : 1,
-		to : 4
-	}, {
-		from : 2,
-		to : 5
-	}, {
-		from : 3,
-		to : 6
-	} ]);
+	nodes = new vis.DataSet();
+	edges = new vis.DataSet();
 
 	var data = {
 		nodes : nodes,
@@ -73,13 +26,18 @@ function initNetwork(container) {
 			borderWidth : 2
 		},
 		edges : {
+			smooth : false,
 			width : 2
 		},
-		physics : {
-			enabled: true,
-			stabilization: {
-				iterations: 1
+		layout : {
+			hierarchical : {
+				direction : 'UD',
+				nodeSpacing : 200,
+				sortMethod : 'directed'
 			}
+		},
+		physics : {
+			enabled : false
 		}
 	};
 
@@ -93,4 +51,16 @@ function initNetwork(container) {
 			}
 		}
 	});
+}
+
+function setNetworkData(nodesJson, edgesJson) {
+	nodes.clear();
+	nodes.add(nodesJson);
+	edges.clear();
+	edges.add(edgesJson);
+	var data = {
+		nodes : nodes,
+		edges : edges
+	};
+	network.setData(data);
 }

@@ -1,5 +1,6 @@
 package com.codeweb.viz.client.js;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Element;
 
 /**
@@ -11,5 +12,10 @@ public class GwtToJsDispatch
   public static native void buildNetwork(Element container)
   /*-{
 		$wnd.initNetwork(container);
+  }-*/;
+  
+  public static native void setNetworkData(JavaScriptObject nodesJson, JavaScriptObject edgesJson)
+  /*-{
+        $wnd.setNetworkData(nodesJson, edgesJson);
   }-*/;
 }
