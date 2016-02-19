@@ -29,3 +29,7 @@ h1 {
 	margin: 20px;
 	margin-top: 0px;
 }
+
+div.vis-network-tooltip {
+	color: black;
+}

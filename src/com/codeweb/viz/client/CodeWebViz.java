@@ -29,6 +29,7 @@ public class CodeWebViz implements EntryPoint
     JSONObject topPkg = new JSONObject();
     topPkg.put("id", new JSONNumber(0));
     topPkg.put("label", new JSONString("com"));
+    topPkg.put("title", new JSONString("Package: <b>com</b><br>Sub-packages: <b>3</b>"));
     topPkg.put("group", new JSONNumber(0));
     nodesArray.set(0, topPkg);
     for (int i = 1; i < 4; i++)
@@ -36,6 +37,7 @@ public class CodeWebViz implements EntryPoint
       JSONObject subPkg = new JSONObject();
       subPkg.put("id", new JSONNumber(i));
       subPkg.put("label", new JSONString("com." + i));
+      subPkg.put("title", new JSONString("Package: <b>" + ("com." + i) + "</b><br>Sub-packages: <b>0</b><br>Classes: <b>3</b>"));
       subPkg.put("group", new JSONNumber(i));
       nodesArray.set(nodesArray.size(), subPkg);
 
@@ -48,6 +50,7 @@ public class CodeWebViz implements EntryPoint
         JSONObject clz = new JSONObject();
         clz.put("id", new JSONNumber(j * i));
         clz.put("label", new JSONString("class." + i + "." + j));
+        clz.put("title", new JSONString("Class: <b>" + ("class." + i + "." + j) + "</b><br>SLOC: <b>23456</b>"));
         clz.put("group", new JSONNumber(i));
         nodesArray.set(nodesArray.size(), clz);
 
