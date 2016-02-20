@@ -17,11 +17,10 @@ function initNetwork(container) {
 		height : '100%',
 		width : '100%',
 		nodes : {
-			shape : 'dot',
+			shape : 'box',
 			size : 30,
 			font : {
-				size : 32,
-				color : '#ffffff'
+				size : 32
 			},
 			borderWidth : 2
 		},

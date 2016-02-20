@@ -54,6 +54,7 @@ public class CodeWebViz implements EntryPoint
         clz.put("group", new JSONNumber(i));
         clz.put("shape", new JSONString("image"));
         clz.put("image", new JSONString("images/java_file.png"));
+        clz.put("font", new JSONString("24px arial #ffffff"));
         nodesArray.set(nodesArray.size(), clz);
 
         JSONObject edgeToPkg = new JSONObject();
