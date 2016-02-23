@@ -21,10 +21,11 @@ h1 {
 	font-family: monospace;
 	text-shadow: 2px 2px #586A7D;
 	color: #112134;
-	padding: 10px 8px 10px 8px;
+	padding: 10px 16px 10px 16px;
 	text-align: center;
 	background-color: rgba(245, 196, 159, 0.2);
 	box-shadow: 2px 2px 8px 0px black;
+	border-radius: 4px;
 	display: inline-block;
 	margin-bottom: 40px;
 }
