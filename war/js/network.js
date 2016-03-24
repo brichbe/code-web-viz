@@ -46,7 +46,13 @@ function initNetwork(container) {
 			if (network.isCluster(params.nodes[0]) == true) {
 				network.openCluster(params.nodes[0]);
 			} else {
-				network.clusterByConnection(params.nodes[0]);
+				var group = nodes.get(params.nodes[0]).group;
+				var clusterOptionsByData = {
+					joinCondition : function(childOptions) {
+						return group === childOptions.group;
+					}
+				};
+				network.cluster(clusterOptionsByData);
 			}
 		}
 	});
