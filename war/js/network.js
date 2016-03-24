@@ -47,6 +47,7 @@ function initNetwork(container) {
 				network.openCluster(params.nodes[0]);
 			} else {
 				var nodeId = params.nodes[0];
+				var node = nodes.get(nodeId);
 				var nodesToCluser = [];
 				nodesToCluser.push(nodeId);
 				var edgesArray = edges.get();
@@ -59,6 +60,15 @@ function initNetwork(container) {
 				var clusterOptions = {
 					joinCondition : function(childOptions) {
 						return nodesToCluser.indexOf(childOptions.id) != -1;
+					},
+					clusterNodeProperties : {
+						borderWidth : 3,
+						shape : 'image',
+						image : 'images/clustering.png',
+						font : '24px arial #ffffff',
+						color : node.color,
+						label : node.label + ' (Cluster)',
+						title : 'Cluster of ' + node.label
 					}
 				};
 				network.cluster(clusterOptions);
