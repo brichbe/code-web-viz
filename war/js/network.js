@@ -46,13 +46,22 @@ function initNetwork(container) {
 			if (network.isCluster(params.nodes[0]) == true) {
 				network.openCluster(params.nodes[0]);
 			} else {
-				var group = nodes.get(params.nodes[0]).group;
-				var clusterOptionsByData = {
+				var nodeId = params.nodes[0];
+				var nodesToCluser = [];
+				nodesToCluser.push(nodeId);
+				var edgesArray = edges.get();
+				for (var index = 0; index < edgesArray.length; index++) {
+					var edge = edgesArray[index];
+					if (nodeId === edge.from) {
+						nodesToCluser.push(edge.to);
+					}
+				}
+				var clusterOptions = {
 					joinCondition : function(childOptions) {
-						return group === childOptions.group;
+						return nodesToCluser.indexOf(childOptions.id) != -1;
 					}
 				};
-				network.cluster(clusterOptionsByData);
+				network.cluster(clusterOptions);
 			}
 		}
 	});
