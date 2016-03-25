@@ -1,0 +1,72 @@
+{
+  "projName": "CodeWeb SSA",
+  "topPackages": [
+    {
+      "name": "com",
+      "subPackages": [
+        {
+          "name": "com.codeweb",
+          "subPackages": [
+            {
+              "name": "com.codeweb.ssa",
+              "subPackages": [
+                {
+                  "name": "com.codeweb.ssa.model",
+                  "subPackages": [],
+                  "srcFiles": [
+                    {
+                      "name": "ProjectPackage.java",
+                      "slocCount": 33
+                    },
+                    {
+                      "name": "ProjectSrcFile.java",
+                      "slocCount": 19
+                    },
+                    {
+                      "name": "ProjectStructure.java",
+                      "slocCount": 27
+                    }
+                  ]
+                },
+                {
+                  "name": "com.codeweb.ssa.util",
+                  "subPackages": [],
+                  "srcFiles": [
+                    {
+                      "name": "CountSLOC.java",
+                      "slocCount": 28
+                    },
+                    {
+                      "name": "FileIO.java",
+                      "slocCount": 34
+                    },
+                    {
+                      "name": "PackageFileFilter.java",
+                      "slocCount": 11
+                    },
+                    {
+                      "name": "Printer.java",
+                      "slocCount": 39
+                    },
+                    {
+                      "name": "SourceFilenameFilter.java",
+                      "slocCount": 11
+                    }
+                  ]
+                }
+              ],
+              "srcFiles": [
+                {
+                  "name": "SSA.java",
+                  "slocCount": 107
+                }
+              ]
+            }
+          ],
+          "srcFiles": []
+        }
+      ],
+      "srcFiles": []
+    }
+  ]
+}

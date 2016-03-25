@@ -15,16 +15,16 @@ body {
 	text-align: center;
 }
 
-h1 {
+#headerTitle {
 	font-size: 3em;
 	font-weight: bold;
 	font-family: monospace;
-	text-shadow: 2px 2px #586A7D;
-	color: #112134;
+	text-shadow: 2px 2px #344C73;
+	color: #C8DAEB;
 	padding: 10px 16px 10px 16px;
 	text-align: center;
-	background-color: rgba(245, 196, 159, 0.2);
-	box-shadow: 2px 2px 8px 0px black;
+	background-color: rgba(46, 75, 97, 0.2);
+	box-shadow: 0px 2px 18px 0px #CBC1B4;
 	border-radius: 4px;
 	display: inline-block;
 	margin-bottom: 40px;
@@ -34,8 +34,8 @@ h1 {
 	background-image: url("images/network_bg.png") !important;
 	background-repeat: no-repeat !important;
 	height: 600px;
-	border: 2px solid #6784AB;
-	box-shadow: 0px 0px 16px 2px #558AAE;
+	border: 2px solid #67768A;
+	box-shadow: 0px 0px 4px 2px #345F7D;
 }
 
 div.vis-network-tooltip {

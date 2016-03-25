@@ -18,6 +18,13 @@ function initNetwork(container) {
 		width : '100%',
 		nodes : {
 			shape : 'box',
+			shadow : {
+				enabled: true,
+				color: '#8B8B8B',
+				size: 6,
+				x: 2,
+				y: 2
+			},
 			size : 30,
 			font : {
 				size : 32

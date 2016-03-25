@@ -2,11 +2,17 @@ package com.codeweb.viz.client;
 
 import com.codeweb.viz.client.js.GwtToJsDispatch;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JsonUtils;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.http.client.Response;
 import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Window;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -23,46 +29,37 @@ public class CodeWebViz implements EntryPoint
   {
     GwtToJsDispatch.buildNetwork(DOM.getElementById("vizSourceStructureNetwork"));
 
-    JSONArray nodesArray = new JSONArray();
-    JSONArray edgesArray = new JSONArray();
-
-    JSONObject topPkg = new JSONObject();
-    topPkg.put("id", new JSONNumber(0));
-    topPkg.put("label", new JSONString("com"));
-    topPkg.put("title", new JSONString("Package: <b>com</b><br>Sub-packages: <b>3</b>"));
-    topPkg.put("group", new JSONNumber(0));
-    nodesArray.set(0, topPkg);
-    for (int i = 1; i < 4; i++)
+    RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, GWT.getModuleBaseURL() + "ssaServlet");
+    try
     {
-      JSONObject subPkg = new JSONObject();
-      subPkg.put("id", new JSONNumber(i));
-      subPkg.put("label", new JSONString("com." + i));
-      subPkg.put("title", new JSONString("Package: <b>" + ("com." + i) + "</b><br>Sub-packages: <b>0</b><br>Classes: <b>3</b>"));
-      subPkg.put("group", new JSONNumber(i));
-      nodesArray.set(nodesArray.size(), subPkg);
-
-      JSONObject edgeToTop = new JSONObject();
-      edgeToTop.put("from", new JSONNumber(0));
-      edgeToTop.put("to", new JSONNumber(i));
-      edgesArray.set(edgesArray.size(), edgeToTop);
-      for (int j = 101; j < 104; j++)
+      builder.sendRequest(null, new RequestCallback()
       {
-        JSONObject clz = new JSONObject();
-        clz.put("id", new JSONNumber(j * i));
-        clz.put("label", new JSONString("class." + i + "." + j));
-        clz.put("title", new JSONString("Class: <b>" + ("class." + i + "." + j) + "</b><br>SLOC: <b>23456</b>"));
-        clz.put("group", new JSONNumber(i));
-        clz.put("shape", new JSONString("image"));
-        clz.put("image", new JSONString("images/java_file.png"));
-        clz.put("font", new JSONString("24px arial #ffffff"));
-        nodesArray.set(nodesArray.size(), clz);
+        public void onError(Request request, Throwable exception)
+        {
+          Window.alert(SERVER_ERROR);
+        }
 
-        JSONObject edgeToPkg = new JSONObject();
-        edgeToPkg.put("from", new JSONNumber(i));
-        edgeToPkg.put("to", new JSONNumber(j * i));
-        edgesArray.set(edgesArray.size(), edgeToPkg);
-      }
+        public void onResponseReceived(Request request, Response response)
+        {
+          if (200 == response.getStatusCode())
+          {
+            JSONObject responseObj = new JSONObject(JsonUtils.safeEval(response.getText()));
+            DOM.getElementById("headerTitle").setInnerHTML(
+                "CodeWeb Vizualization - <i>" + responseObj.get("projName").isString().stringValue() + "</i>");
+            JSONArray nodesArray = responseObj.get("nodes").isArray();
+            JSONArray edgesArray = responseObj.get("edges").isArray();
+            GwtToJsDispatch.setNetworkData(nodesArray.getJavaScriptObject(), edgesArray.getJavaScriptObject());
+          }
+          else
+          {
+            Window.alert(SERVER_ERROR + " (" + response.getStatusText() + ")");
+          }
+        }
+      });
     }
-    GwtToJsDispatch.setNetworkData(nodesArray.getJavaScriptObject(), edgesArray.getJavaScriptObject());
+    catch (RequestException e)
+    {
+      Window.alert(SERVER_ERROR);
+    }
   }
 }
