@@ -1,0 +1,79 @@
+{
+  "projName": "Fibonacci",
+  "topPackages": [
+    {
+      "name": "fibonacci",
+      "subPackages": [
+        {
+          "name": "fibonacci.ui",
+          "subPackages": [],
+          "srcFiles": [
+            {
+              "className": "FibonacciWindow",
+              "fileExt": "java",
+              "slocCount": 237
+            }
+          ]
+        }
+      ],
+      "srcFiles": [
+        {
+          "className": "FibonacciSolver",
+          "fileExt": "java",
+          "slocCount": 27
+        }
+      ]
+    },
+    {
+      "name": "sandbox",
+      "subPackages": [],
+      "srcFiles": [
+        {
+          "className": "ColorCombos",
+          "fileExt": "java",
+          "slocCount": 26
+        },
+        {
+          "className": "ColorDecode",
+          "fileExt": "java",
+          "slocCount": 17
+        },
+        {
+          "className": "DateTimeConvert",
+          "fileExt": "java",
+          "slocCount": 23
+        },
+        {
+          "className": "DateTimeFormat",
+          "fileExt": "java",
+          "slocCount": 11
+        },
+        {
+          "className": "HealthImgGenerator",
+          "fileExt": "java",
+          "slocCount": 45
+        },
+        {
+          "className": "JsonConvert",
+          "fileExt": "java",
+          "slocCount": 18
+        },
+        {
+          "className": "Randoms",
+          "fileExt": "java",
+          "slocCount": 30
+        },
+        {
+          "className": "SimpleTester",
+          "fileExt": "java",
+          "slocCount": 8
+        },
+        {
+          "className": "UICGenerator",
+          "fileExt": "java",
+          "slocCount": 23
+        }
+      ]
+    }
+  ]
+}
