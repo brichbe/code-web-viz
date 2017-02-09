@@ -8,15 +8,17 @@ body {
 }
 
 #contentArea {
-	margin: 0px 80px 20px 80px;
+	margin: 10px;
 }
 
 #headerArea {
 	text-align: center;
+	position: relative;
+	z-index: 10;
 }
 
 #headerTitle {
-	font-size: 3em;
+	font-size: 2em;
 	font-weight: bold;
 	font-family: monospace;
 	text-shadow: 2px 2px #344C73;
@@ -27,15 +29,19 @@ body {
 	box-shadow: 0px 2px 18px 0px #CBC1B4;
 	border-radius: 4px;
 	display: inline-block;
-	margin-bottom: 40px;
+	margin-top: 10px;
 }
 
 #vizSourceStructureNetwork {
 	background-image: url("images/network_bg.png") !important;
 	background-repeat: no-repeat !important;
-	height: 600px;
 	border: 2px solid #67768A;
 	box-shadow: 0px 0px 4px 2px #345F7D;
+	position: fixed;
+	top: 10px;
+	bottom: 10px;
+	right: 10px;
+	left: 10px;
 }
 
 div.vis-network-tooltip {

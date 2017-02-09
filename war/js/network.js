@@ -37,10 +37,12 @@ function initNetwork(container) {
 		},
 		layout : {
 			hierarchical : {
+				enabled: true,
 				direction : 'UD',
 				nodeSpacing : 200,
 				sortMethod : 'directed'
-			}
+			},
+			improvedLayout: false
 		},
 		physics : {
 			enabled : false
