@@ -11,13 +11,12 @@
 
 	<!-- Servlets -->
 	<servlet>
-		<servlet-name>ssaServlet</servlet-name>
-		<servlet-class>com.codeweb.viz.server.SsaServlet</servlet-class>
+		<servlet-name>ssaFileUploadServlet</servlet-name>
+		<servlet-class>com.codeweb.viz.server.SsaFileUploadServlet</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
-		<servlet-name>ssaServlet</servlet-name>
-		<url-pattern>/codewebviz/ssaServlet</url-pattern>
+		<servlet-name>ssaFileUploadServlet</servlet-name>
+		<url-pattern>/codewebviz/ssaFileUpload</url-pattern>
 	</servlet-mapping>
 
 </web-app>

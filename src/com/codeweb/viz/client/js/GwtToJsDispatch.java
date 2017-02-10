@@ -18,4 +18,9 @@ public class GwtToJsDispatch
   /*-{
         $wnd.setNetworkData(nodesJson, edgesJson);
   }-*/;
+  
+  public static native void logJson(JavaScriptObject json)
+  /*-{
+        console.log(JSON.stringify(json, null, 4));
+  }-*/;
 }
