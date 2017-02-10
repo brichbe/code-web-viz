@@ -13,14 +13,14 @@ public class GwtToJsDispatch
   /*-{
 		$wnd.initNetwork(container);
   }-*/;
-  
+
   public static native void setNetworkData(JavaScriptObject nodesJson, JavaScriptObject edgesJson)
   /*-{
-        $wnd.setNetworkData(nodesJson, edgesJson);
+		$wnd.setNetworkData(nodesJson, edgesJson);
   }-*/;
-  
+
   public static native void logJson(JavaScriptObject json)
   /*-{
-        console.log(JSON.stringify(json, null, 4));
+		console.log(JSON.stringify(json, null, 4));
   }-*/;
 }

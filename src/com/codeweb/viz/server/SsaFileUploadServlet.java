@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,11 +49,8 @@ public class SsaFileUploadServlet extends HttpServlet
             out.write(buffer, 0, len);
           }
 
-          String contents = new String(out.toByteArray());
-          String json = parseSsaContents(contents).toString();
-          System.out.println("Sending:");// TODO: BMB -remove
-          System.out.println(json);
-          System.out.println(json.length());
+          String uploadFileContents = new String(out.toByteArray());
+          String json = StringEscapeUtils.escapeHtml4(parseSsaContents(uploadFileContents).toString());
           resp.getWriter().write(json);
           resp.getWriter().flush();
           break;
@@ -66,10 +64,10 @@ public class SsaFileUploadServlet extends HttpServlet
     }
   }
 
-  private static JSONObject parseSsaContents(String fileContents) throws Exception
+  private static JSONObject parseSsaContents(String ssaFileContents) throws Exception
   {
     JSONObject responseObj = new JSONObject();
-    ProjectStructure project = new Gson().fromJson(fileContents, ProjectStructure.class);
+    ProjectStructure project = new Gson().fromJson(ssaFileContents, ProjectStructure.class);
 
     JSONArray nodesArray = new JSONArray();
     JSONArray edgesArray = new JSONArray();
