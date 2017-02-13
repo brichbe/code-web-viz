@@ -37,7 +37,7 @@ public class CodeWebViz implements EntryPoint
     fileUploadForm.setEncoding(FormPanel.ENCODING_MULTIPART);
     fileUploadForm.setMethod(FormPanel.METHOD_POST);
     fileUploadForm.setAction(GWT.getModuleBaseURL() + "ssaFileUpload");
-    FileUpload fileUpload = new FileUpload();
+    final FileUpload fileUpload = new FileUpload();
     fileUpload.setName("upload");
     fileUpload.getElement().getStyle().setPosition(Position.RELATIVE);
     fileUploadForm.add(fileUpload);
@@ -54,6 +54,8 @@ public class CodeWebViz implements EntryPoint
       }
     });
 
+    // TODO: BMB - controls to change the network layout type
+    // TODO: BMB - Enabled network zoom/etc controls.
     fileUploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler()
     {
       @Override
@@ -62,10 +64,28 @@ public class CodeWebViz implements EntryPoint
         String result = event.getResults();
         if (result == null)
         {
+          // TODO: BMB - here and elsewhere use sweet alert.
           Window.alert(SERVER_ERROR);
           return;
         }
+        if (result.trim().isEmpty())
+        {
+          String filename = fileUpload.getFilename();
+          int index = filename.lastIndexOf('\\');
+          if (index != -1)
+          {
+            filename = filename.substring(index + 1);
+          }
+          index = filename.lastIndexOf('/');
+          if (index != -1)
+          {
+            filename = filename.substring(index + 1);
+          }
+          Window.alert("The selected file (" + filename + ") is not a valid SSA document.");
+          return;
+        }
 
+        // TODO: BMB - refactor into manager class and use try/catch
         result = result.replaceAll("&lt;", "<").replaceAll("&gt;", ">").replaceAll("\\\\/", "/");
         JSONObject responseObj = new JSONObject(JsonUtils.safeEval(result));
         DOM.getElementById("headerTitle").setInnerHTML(

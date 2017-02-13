@@ -60,7 +60,7 @@ public class SsaFileUploadServlet extends HttpServlet
     catch (Exception e)
     {
       System.err.println("Error parsing SSA file: " + e.getMessage());
-      throw new RuntimeException(e);
+      return;
     }
   }
 
