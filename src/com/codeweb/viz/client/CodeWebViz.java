@@ -1,7 +1,7 @@
 package com.codeweb.viz.client;
 
 import com.codeweb.viz.client.js.GwtToJsDispatch;
-import com.codeweb.viz.client.upload.FileUploadPopupPanel;
+import com.codeweb.viz.client.upload.SsaFileUploadPopupPanel;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
@@ -22,6 +22,6 @@ public class CodeWebViz implements EntryPoint
     Window.enableScrolling(false);
     GwtToJsDispatch.buildNetwork(DOM.getElementById("vizSourceStructureNetwork"));
 
-    FileUploadPopupPanel.show();
+    SsaFileUploadPopupPanel.show();
   }
 }

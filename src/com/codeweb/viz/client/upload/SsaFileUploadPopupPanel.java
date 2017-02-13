@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class FileUploadPopupPanel
+public class SsaFileUploadPopupPanel
 {
   private static final PopupPanel popupPanel = new PopupPanel(false);
   static
