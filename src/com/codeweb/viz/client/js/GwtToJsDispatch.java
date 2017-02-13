@@ -30,7 +30,17 @@ public class GwtToJsDispatch
 			title : title,
 			text : msg,
 			type : "error",
-			animation: "pop"
+			animation : "pop"
 		});
+  }-*/;
+
+  public static native void showIndeterminateProgress()
+  /*-{
+		$wnd.startIndeterminateProgress();
+  }-*/;
+
+  public static native void hideIndeterminateProgress()
+  /*-{
+		$wnd.stopIndeterminateProgress();
   }-*/;
 }

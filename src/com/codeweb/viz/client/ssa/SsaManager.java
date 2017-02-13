@@ -12,6 +12,7 @@ public class SsaManager
 
   public static boolean handleSsaFileLoaded(String ssaNetworkJson)
   {
+    GwtToJsDispatch.showIndeterminateProgress();
     try
     {
       ssaNetworkJson = ssaNetworkJson.replaceAll("&lt;", "<").replaceAll("&gt;", ">").replaceAll("\\\\/", "/");
@@ -27,6 +28,10 @@ public class SsaManager
     catch (Exception e)
     {
       GWT.log("Failed to parse SSA file load response", e);
+    }
+    finally
+    {
+      GwtToJsDispatch.hideIndeterminateProgress();
     }
     return false;
   }

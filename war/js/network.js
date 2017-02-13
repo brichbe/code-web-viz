@@ -19,11 +19,11 @@ function initNetwork(container) {
 		nodes : {
 			shape : 'box',
 			shadow : {
-				enabled: true,
-				color: '#8B8B8B',
-				size: 6,
-				x: 2,
-				y: 2
+				enabled : true,
+				color : '#8B8B8B',
+				size : 6,
+				x : 2,
+				y : 2
 			},
 			size : 30,
 			font : {
@@ -35,17 +35,17 @@ function initNetwork(container) {
 			smooth : false,
 			width : 2
 		},
-		interaction: {
-			navigationButtons: true
+		interaction : {
+			navigationButtons : true
 		},
 		layout : {
 			hierarchical : {
-				enabled: true,
+				enabled : true,
 				direction : 'UD',
 				nodeSpacing : 200,
 				sortMethod : 'directed'
 			},
-			improvedLayout: false
+			improvedLayout : false
 		},
 		physics : {
 			enabled : false,

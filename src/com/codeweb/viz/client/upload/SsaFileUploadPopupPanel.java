@@ -70,7 +70,6 @@ public class SsaFileUploadPopupPanel
       }
     });
 
-    // TODO: BMB - controls to change the network layout type
     fileUploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler()
     {
       @Override
@@ -106,7 +105,6 @@ public class SsaFileUploadPopupPanel
         else
         {
           GwtToJsDispatch.promptError("Data Error", "Unable to render the SSA network data. Try again or choose another file.");
-          return;
         }
       }
     });
