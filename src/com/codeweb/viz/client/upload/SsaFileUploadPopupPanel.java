@@ -1,6 +1,7 @@
 package com.codeweb.viz.client.upload;
 
 import com.codeweb.viz.client.CodeWebViz;
+import com.codeweb.viz.client.js.GwtToJsDispatch;
 import com.codeweb.viz.client.ssa.SsaManager;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
@@ -8,7 +9,6 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
@@ -28,7 +28,7 @@ public class SsaFileUploadPopupPanel
   {
     popupPanel.setAnimationEnabled(false);
     popupPanel.setGlassEnabled(true);
-    popupPanel.setModal(true);
+    popupPanel.setModal(false);
     popupPanel.getElement().setId("fileUploadPopupPanel");
 
     VerticalPanel headerPanel = new VerticalPanel();
@@ -79,8 +79,7 @@ public class SsaFileUploadPopupPanel
         String result = event.getResults();
         if (result == null)
         {
-          // TODO: BMB - here and elsewhere use sweet alert.
-          Window.alert(CodeWebViz.SERVER_ERROR);
+          GwtToJsDispatch.promptError("Connection Error", CodeWebViz.SERVER_ERROR);
           return;
         }
         if (result.trim().isEmpty())
@@ -96,7 +95,7 @@ public class SsaFileUploadPopupPanel
           {
             filename = filename.substring(index + 1);
           }
-          Window.alert("The selected file (" + filename + ") is not a valid SSA document.");
+          GwtToJsDispatch.promptError("Invalid File", "The selected file (" + filename + ") is not a valid SSA document.");
           return;
         }
 
@@ -106,7 +105,7 @@ public class SsaFileUploadPopupPanel
         }
         else
         {
-          Window.alert("Unable to render the SSA network data. Try again or choose another file.");
+          GwtToJsDispatch.promptError("Data Error", "Unable to render the SSA network data. Try again or choose another file.");
           return;
         }
       }

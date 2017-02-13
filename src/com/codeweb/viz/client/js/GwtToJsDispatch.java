@@ -23,4 +23,14 @@ public class GwtToJsDispatch
   /*-{
 		console.log(JSON.stringify(json, null, 4));
   }-*/;
+
+  public static native void promptError(String title, String msg)
+  /*-{
+		$wnd.swal({
+			title : title,
+			text : msg,
+			type : "error",
+			animation: "pop"
+		});
+  }-*/;
 }
