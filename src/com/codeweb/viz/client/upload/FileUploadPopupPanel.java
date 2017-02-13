@@ -1,17 +1,13 @@
 package com.codeweb.viz.client.upload;
 
 import com.codeweb.viz.client.CodeWebViz;
-import com.codeweb.viz.client.js.GwtToJsDispatch;
+import com.codeweb.viz.client.ssa.SsaManager;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FileUpload;
@@ -104,16 +100,15 @@ public class FileUploadPopupPanel
           return;
         }
 
-        hide();
-
-        // TODO: BMB - refactor into manager class and use try/catch
-        result = result.replaceAll("&lt;", "<").replaceAll("&gt;", ">").replaceAll("\\\\/", "/");
-        JSONObject responseObj = new JSONObject(JsonUtils.safeEval(result));
-        DOM.getElementById("headerTitle").setInnerHTML(
-            "CodeWeb Vizualization - <i>" + responseObj.get("projName").isString().stringValue() + "</i>");
-        JSONArray nodesArray = responseObj.get("nodes").isArray();
-        JSONArray edgesArray = responseObj.get("edges").isArray();
-        GwtToJsDispatch.setNetworkData(nodesArray.getJavaScriptObject(), edgesArray.getJavaScriptObject());
+        if (SsaManager.handleSsaFileLoaded(result))
+        {
+          hide();
+        }
+        else
+        {
+          Window.alert("Unable to render the SSA network data. Try again or choose another file.");
+          return;
+        }
       }
     });
 
