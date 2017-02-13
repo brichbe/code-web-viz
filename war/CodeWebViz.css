@@ -47,3 +47,26 @@ body {
 div.vis-network-tooltip {
 	color: black;
 }
+
+#fileUploadPopupPanel {
+	z-index: 99 !important;
+	border-width: 4px !important;
+	border-style: outset !important;
+	border-radius: 25px !important;
+	border-color: rgb(112, 152, 197) !important;
+	box-shadow: 0px 0px 16px 4px white !important;
+}
+
+#fileUploadPopupPanelHeader {
+	font-size: 2em;
+	font-weight: bold;
+}
+
+#fileUploadPopupPanelImg {
+	border-style: outset !important;
+	border-radius: 4px !important;
+	box-shadow: 0px 0px 10px 2px lightgray !important;
+	padding: 8px;
+	cursor: hand;
+	cursor: pointer;
+}
