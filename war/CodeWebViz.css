@@ -21,9 +21,9 @@ body {
 	font-size: 2em;
 	font-weight: bold;
 	font-family: monospace;
-	text-shadow: 2px 2px #344C73;
-	color: #C8DAEB;
-	padding: 10px 16px 10px 16px;
+	text-shadow: 2px 2px rgb(50, 50, 50);
+	color: rgba(228, 233, 240, 1);
+	padding: 10px 30px 10px 30px;
 	text-align: center;
 	background-color: rgba(46, 75, 97, 0.2);
 	box-shadow: 0px 2px 18px 0px #CBC1B4;
@@ -69,4 +69,9 @@ div.vis-network-tooltip {
 	padding: 8px;
 	cursor: hand;
 	cursor: pointer;
+}
+
+.gwt-PopupPanelGlass {
+	background-color: rgba(77, 77, 77, 1) !important;
+	opacity: 0.8 !important;
 }
