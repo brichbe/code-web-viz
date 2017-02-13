@@ -35,6 +35,9 @@ function initNetwork(container) {
 			smooth : false,
 			width : 2
 		},
+		interaction: {
+			navigationButtons: true
+		},
 		layout : {
 			hierarchical : {
 				enabled: true,
