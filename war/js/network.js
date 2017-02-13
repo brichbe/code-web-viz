@@ -27,7 +27,7 @@ function initNetwork(container) {
 			},
 			size : 30,
 			font : {
-				size : 32
+				size : 24
 			},
 			borderWidth : 2
 		},
@@ -48,7 +48,8 @@ function initNetwork(container) {
 			improvedLayout: false
 		},
 		physics : {
-			enabled : false
+			enabled : false,
+			stabilization : false
 		}
 	};
 

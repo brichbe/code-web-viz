@@ -118,7 +118,8 @@ public class SsaFileUploadServlet extends HttpServlet
       srcNode.put("group", pkgId);
       srcNode.put("shape", "image");
       srcNode.put("image", "images/java_file.png");
-      srcNode.put("font", "24px arial #ffffff");
+      srcNode.put("size", "16");
+      srcNode.put("font", "16px arial #ffffff");
       nodesArray.put(srcNode);
 
       JSONObject edgeToPkg = new JSONObject();
