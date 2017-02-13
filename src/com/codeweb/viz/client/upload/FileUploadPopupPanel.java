@@ -44,6 +44,7 @@ public class FileUploadPopupPanel
     Image img = new Image("images/upload.png");
     img.setSize("64px", "64px");
     img.getElement().setId("fileUploadPopupPanelImg");
+    img.setTitle("Choose file to upload");
 
     final FormPanel fileUploadForm = new FormPanel();
     fileUploadForm.setEncoding(FormPanel.ENCODING_MULTIPART);
@@ -74,7 +75,6 @@ public class FileUploadPopupPanel
     });
 
     // TODO: BMB - controls to change the network layout type
-    // TODO: BMB - Enabled network zoom/etc controls.
     fileUploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler()
     {
       @Override
