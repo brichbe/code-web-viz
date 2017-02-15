@@ -20,8 +20,12 @@ public class CodeWebViz implements EntryPoint
   public void onModuleLoad()
   {
     Window.enableScrolling(false);
-    GwtToJsDispatch.buildNetwork(DOM.getElementById("vizSourceStructureNetwork"));
+    GwtToJsDispatch.initNetwork(DOM.getElementById("vizSourceStructureNetwork"));
 
     SsaFileUploadPopupPanel.show();
+    
+    // TODO: BMB - when loading REM, shown Grapd2D with background areas for each package,
+    // and bars inside each of those representing the number of times each class in that package
+    // was invoked.
   }
 }

@@ -9,7 +9,7 @@ import com.google.gwt.dom.client.Element;
  */
 public class GwtToJsDispatch
 {
-  public static native void buildNetwork(Element container)
+  public static native void initNetwork(Element container)
   /*-{
 		$wnd.initNetwork(container);
   }-*/;
@@ -34,13 +34,13 @@ public class GwtToJsDispatch
 		});
   }-*/;
 
-  public static native void showIndeterminateProgress()
+  public static native void showNetworkIndeterminateProgress()
   /*-{
-		$wnd.startIndeterminateProgress();
+		$wnd.startNetworkIndeterminateProgress();
   }-*/;
 
-  public static native void hideIndeterminateProgress()
+  public static native void hideNetworkIndeterminateProgress()
   /*-{
-		$wnd.stopIndeterminateProgress();
+		$wnd.stopNetworkIndeterminateProgress();
   }-*/;
 }

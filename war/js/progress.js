@@ -1,12 +1,12 @@
-var mprogress = new Mprogress({
+var networkIndeterminateProgress = new Mprogress({
 	template : 3,
 	parent : '#vizSourceStructureNetwork'
 });
 
-function startIndeterminateProgress() {
-	mprogress.start();
+function startNetworkIndeterminateProgress() {
+	networkIndeterminateProgress.start();
 }
 
-function stopIndeterminateProgress() {
-	mprogress.end();
+function stopNetworkIndeterminateProgress() {
+	networkIndeterminateProgress.end();
 }

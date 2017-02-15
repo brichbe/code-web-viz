@@ -21,6 +21,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+// TODO: BMB - Also support uploading a zip file that contains src,
+// extracts on server, and creates the SSA file from it,
+// then proceeds to parse and display that network.
 public class SsaFileUploadPopupPanel
 {
   private static final PopupPanel popupPanel = new PopupPanel(false);
@@ -98,6 +101,7 @@ public class SsaFileUploadPopupPanel
           return;
         }
 
+        result = result.replaceAll("&lt;", "<").replaceAll("&gt;", ">").replaceAll("\\\\/", "/");
         if (SsaManager.handleSsaFileLoaded(result))
         {
           hide();

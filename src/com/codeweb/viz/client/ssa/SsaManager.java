@@ -13,10 +13,10 @@ public class SsaManager
 
   public static boolean handleSsaFileLoaded(String ssaNetworkJson)
   {
-    GwtToJsDispatch.showIndeterminateProgress();
+    boolean success = true;
+    GwtToJsDispatch.showNetworkIndeterminateProgress();
     try
     {
-      ssaNetworkJson = ssaNetworkJson.replaceAll("&lt;", "<").replaceAll("&gt;", ">").replaceAll("\\\\/", "/");
       JSONObject responseObj = new JSONObject(JsonUtils.safeEval(ssaNetworkJson));
       // TODO: BMB  - add menu/button bar with initial options to change layout, upload new ssa
       Element headerTitle = DOM.getElementById("headerTitle");
@@ -28,16 +28,17 @@ public class SsaManager
       JSONArray nodesArray = responseObj.get("nodes").isArray();
       JSONArray edgesArray = responseObj.get("edges").isArray();
       GwtToJsDispatch.setNetworkData(nodesArray.getJavaScriptObject(), edgesArray.getJavaScriptObject());
-      return true;
     }
     catch (Exception e)
     {
       GWT.log("Failed to parse SSA file load response", e);
+      success = false;
     }
     finally
     {
-      GwtToJsDispatch.hideIndeterminateProgress();
+      GwtToJsDispatch.hideNetworkIndeterminateProgress();
     }
-    return false;
+    return success;
+
   }
 }

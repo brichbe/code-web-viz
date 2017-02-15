@@ -90,7 +90,6 @@ public class SsaFileUploadServlet extends HttpServlet
     responseObj.put("numPkgs", nodesArray.length() - numSrcFiles);
     responseObj.put("numSrcFiles", numSrcFiles);
     responseObj.put("totalSloc", totalSloc);
-    System.out.println(responseObj);
     responseObj.put("projName", project.getProjName());
     responseObj.put("nodes", nodesArray);
     responseObj.put("edges", edgesArray);
