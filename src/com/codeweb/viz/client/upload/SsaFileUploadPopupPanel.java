@@ -104,6 +104,7 @@ public class SsaFileUploadPopupPanel
         result = result.replaceAll("&lt;", "<").replaceAll("&gt;", ">").replaceAll("\\\\/", "/");
         if (SsaManager.handleSsaFileLoaded(result))
         {
+          // TODO: BMB - eventually hide this first, and if an error parsing json, display it again
           hide();
         }
         else

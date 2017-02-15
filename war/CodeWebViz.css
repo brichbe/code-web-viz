@@ -12,6 +12,18 @@ body {
 }
 
 #headerArea {
+	font-weight: lighter;
+	font-variant: small-caps;
+	text-shadow: 2px 2px rgb(50, 50, 50);
+	color: rgba(228, 233, 240, 1);
+	background: linear-gradient(rgba(166, 166, 166, 0.4),
+		rgba(110, 110, 110, 0.4));
+	border: 2px solid #67768A;
+	box-shadow: 0px 2px 4px 2px #345F7D;
+	display: block;
+	padding: 8px;
+	margin: 6px;
+	margin-top: 12px;
 	text-align: center;
 	position: relative;
 	z-index: 10;
@@ -19,19 +31,7 @@ body {
 
 #headerTitle {
 	font-size: 2em;
-	font-weight: lighter;
-	font-variant: small-caps;
-	text-shadow: 2px 2px rgb(50, 50, 50);
-	color: rgba(228, 233, 240, 1);
-	padding: 10px 30px 10px 30px;
-	text-align: center;
-	background: linear-gradient(rgba(166, 166, 166, 0.4),
-		rgba(110, 110, 110, 0.4));
-	border: 2px solid #67768A;
-	box-shadow: 0px 2px 4px 2px #345F7D;
-	display: block;
-	margin: 6px;
-	margin-top: 12px;
+	margin: 4px;
 }
 
 #headerProjectDetails {
