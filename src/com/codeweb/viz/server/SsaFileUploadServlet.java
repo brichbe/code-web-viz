@@ -76,6 +76,21 @@ public class SsaFileUploadServlet extends HttpServlet
     {
       createNetworkNodesAndEdges(nodesArray, edgesArray, pkg, null);
     }
+
+    int numSrcFiles = 0, totalSloc = 0;
+    for (int i = 0; i < nodesArray.length(); i++)
+    {
+      JSONObject node = nodesArray.getJSONObject(i);
+      if (node.optBoolean("isSrcNode", false))
+      {
+        numSrcFiles++;
+        totalSloc += node.getInt("slocCount");
+      }
+    }
+    responseObj.put("numPkgs", nodesArray.length() - numSrcFiles);
+    responseObj.put("numSrcFiles", numSrcFiles);
+    responseObj.put("totalSloc", totalSloc);
+    System.out.println(responseObj);
     responseObj.put("projName", project.getProjName());
     responseObj.put("nodes", nodesArray);
     responseObj.put("edges", edgesArray);
@@ -120,6 +135,8 @@ public class SsaFileUploadServlet extends HttpServlet
       srcNode.put("image", "images/java_file.png");
       srcNode.put("size", "16");
       srcNode.put("font", "16px arial #ffffff");
+      srcNode.put("isSrcNode", true);
+      srcNode.put("slocCount", srcFile.getSlocCount());
       nodesArray.put(srcNode);
 
       JSONObject edgeToPkg = new JSONObject();
