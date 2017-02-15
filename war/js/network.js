@@ -101,3 +101,15 @@ function setNetworkData(nodesJson, edgesJson) {
 	};
 	network.setData(data);
 }
+
+function addNodes(nodesJson) {
+	nodes.add(nodesJson);
+}
+
+function addEdges(edgesJson) {
+	edges.add(edgesJson);
+}
+
+function fitNetwork() {
+	network.fit();
+}

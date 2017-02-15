@@ -78,7 +78,7 @@ public class SsaFileUploadPopupPanel
       @Override
       public void onSubmitComplete(SubmitCompleteEvent event)
       {
-        String result = event.getResults();
+        final String result = event.getResults();
         if (result == null)
         {
           GwtToJsDispatch.promptError("Connection Error", CodeWebViz.SERVER_ERROR);
@@ -101,16 +101,9 @@ public class SsaFileUploadPopupPanel
           return;
         }
 
-        result = result.replaceAll("&lt;", "<").replaceAll("&gt;", ">").replaceAll("\\\\/", "/");
-        if (SsaManager.handleSsaFileLoaded(result))
-        {
-          // TODO: BMB - eventually hide this first, and if an error parsing json, display it again
-          hide();
-        }
-        else
-        {
-          GwtToJsDispatch.promptError("Data Error", "Unable to render the SSA network data. Try again or choose another file.");
-        }
+        hide();
+        String sanitized = result.replaceAll("&lt;", "<").replaceAll("&gt;", ">").replaceAll("\\\\/", "/");
+        SsaManager.handleSsaFileLoaded(sanitized);
       }
     });
 
