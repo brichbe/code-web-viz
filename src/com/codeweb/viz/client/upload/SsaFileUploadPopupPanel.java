@@ -4,11 +4,15 @@ import com.codeweb.viz.client.CodeWebViz;
 import com.codeweb.viz.client.js.GwtToJsDispatch;
 import com.codeweb.viz.client.ssa.SsaManager;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
@@ -26,6 +30,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 // then proceeds to parse and display that network.
 public class SsaFileUploadPopupPanel
 {
+  private static boolean allowEscToClose = false;
   private static final PopupPanel popupPanel = new PopupPanel(false);
   static
   {
@@ -115,11 +120,30 @@ public class SsaFileUploadPopupPanel
     mainPanel.add(fileUploadForm, DockPanel.SOUTH);
 
     popupPanel.setWidget(mainPanel);
+
+    Event.addNativePreviewHandler(new Event.NativePreviewHandler()
+    {
+      @Override
+      public void onPreviewNativeEvent(NativePreviewEvent event)
+      {
+        if (allowEscToClose && popupPanel.isShowing())
+        {
+          if (Event.ONKEYDOWN == event.getTypeInt())
+          {
+            NativeEvent ne = event.getNativeEvent();
+            if (KeyCodes.KEY_ESCAPE == ne.getKeyCode())
+            {
+              hide();
+            }
+          }
+        }
+      }
+    });
   }
 
-  // TODO: BMB - allow Esc to hide the popup anytime except when first shown
-  public static synchronized void show()
+  public static synchronized void show(boolean allowClose)
   {
+    allowEscToClose = allowClose;
     popupPanel.center();
   }
 

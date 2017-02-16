@@ -100,5 +100,7 @@ div.vis-network-tooltip {
 
 .gwt-PopupPanelGlass {
 	background-color: rgba(77, 77, 77, 1) !important;
+	background: radial-gradient(gray 20%, black 80%);
 	opacity: 0.8 !important;
+	z-index: 99;
 }

@@ -22,8 +22,7 @@ public class SsaProjectMenuBar extends HorizontalPanel
       @Override
       public void onClick(ClickEvent event)
       {
-        hide();
-        SsaFileUploadPopupPanel.show();
+        SsaFileUploadPopupPanel.show(true);
       }
     });
     reloadSsaProjBtn.getElement().addClassName("ssaProjMenuPanelBtn");

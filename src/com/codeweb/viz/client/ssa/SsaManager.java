@@ -24,7 +24,7 @@ public class SsaManager
     {
       GWT.log("Failed to parse SSA file load response", e);
       GwtToJsDispatch.promptError("Data Error", "Unable to render the SSA network data. Try again or choose another file.");
-      SsaFileUploadPopupPanel.show();
+      SsaFileUploadPopupPanel.show(false);
     }
   }
 }
