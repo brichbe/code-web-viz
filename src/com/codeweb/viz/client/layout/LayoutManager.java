@@ -4,23 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.codeweb.viz.client.js.GwtToJsDispatch;
+import com.codeweb.viz.client.ssa.SsaProjectMenuBar;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.ui.RootPanel;
 
 public class LayoutManager
 {
+  private static final SsaProjectMenuBar ssaProjectMenuBar = new SsaProjectMenuBar();
+
   public static void init()
   {
     GwtToJsDispatch.initNetwork(DOM.getElementById("vizSourceStructureNetwork"));
-    // TODO: BMB  - add menu/button bar with initial options to change layout, upload new ssa
+    RootPanel.get("contentArea").add(ssaProjectMenuBar);
+    ssaProjectMenuBar.hide();
   }
 
   public static void displayNetwork(String projName, String projDetails, JSONArray nodesArray, JSONArray edgesArray)
   {
     GwtToJsDispatch.showNetworkIndeterminateProgress();
+
+    ssaProjectMenuBar.show();
+    GwtToJsDispatch.clearNetworkData();
 
     Element headerTitle = DOM.getElementById("headerTitle");
     headerTitle.setInnerHTML("CodeWeb Vizualization - <i>\"" + projName + "\"</i>");
@@ -38,6 +46,7 @@ public class LayoutManager
       edgeValues.add(edgesArray.get(i));
     }
 
+    // TODO: BMB - Display a determinate progress bar to show percentage done
     final int MAX_ANIMATE_CYCLES = 25;
     final int ANIMATE_RATE = 10;
     final int TIMER_MAX_ANIMATE_TIME = 1000;

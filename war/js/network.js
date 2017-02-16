@@ -102,6 +102,11 @@ function setNetworkData(nodesJson, edgesJson) {
 	network.setData(data);
 }
 
+function clearNetworkData() {
+	nodes.clear();
+	edges.clear();
+}
+
 function addNodes(nodesJson) {
 	nodes.add(nodesJson);
 }

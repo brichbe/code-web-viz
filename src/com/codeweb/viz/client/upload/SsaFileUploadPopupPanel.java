@@ -117,6 +117,7 @@ public class SsaFileUploadPopupPanel
     popupPanel.setWidget(mainPanel);
   }
 
+  // TODO: BMB - allow Esc to hide the popup anytime except when first shown
   public static synchronized void show()
   {
     popupPanel.center();

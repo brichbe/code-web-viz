@@ -13,6 +13,11 @@ public class GwtToJsDispatch
   /*-{
 		$wnd.initNetwork(container);
   }-*/;
+  
+  public static native void clearNetworkData()
+  /*-{
+        $wnd.clearNetworkData();
+  }-*/;
 
   public static native void setNetworkData(JavaScriptObject nodesJson, JavaScriptObject edgesJson)
   /*-{
