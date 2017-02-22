@@ -6,12 +6,7 @@ var edges;
 function initNetwork(container) {
 	nodes = new vis.DataSet();
 	edges = new vis.DataSet();
-
-	var data = {
-		nodes : nodes,
-		edges : edges
-	};
-	var options = {
+	options = {
 		autoResize : true,
 		clickToUse : false,
 		height : '100%',
@@ -45,12 +40,18 @@ function initNetwork(container) {
 				nodeSpacing : 200,
 				sortMethod : 'directed'
 			},
-			improvedLayout : false
+			improvedLayout : true
 		},
 		physics : {
 			enabled : false,
-			stabilization : false
+			stabilization : {
+				enabled : false,
+			}
 		}
+	};
+	var data = {
+		nodes : nodes,
+		edges : edges
 	};
 
 	network = new vis.Network(container, data, options);
@@ -88,6 +89,11 @@ function initNetwork(container) {
 			}
 		}
 	});
+	network.on("stabilized", function() {
+		window.setTimeout(function() {
+			fitNetwork();
+		}, 50);
+	});
 }
 
 function setNetworkData(nodesJson, edgesJson) {
@@ -115,6 +121,43 @@ function addEdges(edgesJson) {
 	edges.add(edgesJson);
 }
 
+function toggleNetworkLayout(asHierarchical) {
+	if (asHierarchical) {
+		options.layout = {
+			hierarchical : {
+				enabled : true,
+				direction : 'UD',
+				nodeSpacing : 200,
+				sortMethod : 'directed'
+			},
+			improvedLayout : true
+		};
+		options.physics = {
+			enabled : false,
+			stabilization : {
+				enabled : false,
+			}
+		};
+		network.setOptions(JSON.parse(JSON.stringify(options)));
+		fitNetwork();
+	} else {
+		options.layout.hierarchical = false;
+		options.physics = {
+			enabled : true,
+			solver : "hierarchicalRepulsion",
+			stabilization : {
+				enabled : true
+			}
+		};
+		network.setOptions(JSON.parse(JSON.stringify(options)));
+		network.stabilize();
+	}
+}
+
 function fitNetwork() {
-	network.fit();
+	network.fit({
+		animation : {
+			duration : 150
+		}
+	});
 }

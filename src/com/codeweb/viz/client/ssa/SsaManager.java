@@ -1,7 +1,7 @@
 package com.codeweb.viz.client.ssa;
 
 import com.codeweb.viz.client.js.GwtToJsDispatch;
-import com.codeweb.viz.client.layout.LayoutManager;
+import com.codeweb.viz.client.layout.NetworkLayoutManager;
 import com.codeweb.viz.client.upload.SsaFileUploadPopupPanel;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsonUtils;
@@ -15,7 +15,7 @@ public class SsaManager
     {
       // TODO: BMB - format these numbers...
       JSONObject responseObj = new JSONObject(JsonUtils.safeEval(ssaNetworkJson));
-      LayoutManager.displayNetwork(responseObj.get("projName").isString().stringValue(), responseObj.get("numPkgs").toString()
+      NetworkLayoutManager.displayNetwork(responseObj.get("projName").isString().stringValue(), responseObj.get("numPkgs").toString()
           + " packages,  " + responseObj.get("numSrcFiles").toString() + " source files,  "
           + responseObj.get("totalSloc").toString() + " total SLOC", responseObj.get("nodes").isArray(), responseObj.get("edges")
           .isArray());

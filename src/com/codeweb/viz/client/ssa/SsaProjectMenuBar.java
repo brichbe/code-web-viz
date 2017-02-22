@@ -1,23 +1,20 @@
 package com.codeweb.viz.client.ssa;
 
+import com.codeweb.viz.client.layout.NetworkLayoutManager;
 import com.codeweb.viz.client.upload.SsaFileUploadPopupPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
-// TODO: BMB - add menu/button bar with initial options to change layout, upload
-// new ssa
 public class SsaProjectMenuBar extends HorizontalPanel
 {
-  private final Button reloadSsaProjBtn;
-
   public SsaProjectMenuBar()
   {
     super();
-    super.getElement().setId("ssaProjMenuPanel");
+    getElement().setId("ssaProjMenuPanel");
 
-    reloadSsaProjBtn = new Button("<img src=\"images/arrow_refresh.png\"/>", new ClickHandler()
+    final Button reloadSsaProjBtn = new Button("<img src=\"images/arrow_refresh.png\"/>", new ClickHandler()
     {
       @Override
       public void onClick(ClickEvent event)
@@ -27,7 +24,28 @@ public class SsaProjectMenuBar extends HorizontalPanel
     });
     reloadSsaProjBtn.getElement().addClassName("ssaProjMenuPanelBtn");
     reloadSsaProjBtn.setTitle("Load a new SSA project");
-    super.add(reloadSsaProjBtn);
+    add(reloadSsaProjBtn);
+
+    final Button toggleNetworkLayoutBtn = new Button("<img src=\"images/molecule.png\"/>");
+    toggleNetworkLayoutBtn.addClickHandler(new ClickHandler()
+    {
+      @Override
+      public void onClick(ClickEvent event)
+      {
+        boolean hierLayout = NetworkLayoutManager.toggleHierarchicalLayout();
+        if (hierLayout)
+        {
+          toggleNetworkLayoutBtn.setHTML("<img src=\"images/molecule.png\"/>");
+        }
+        else
+        {
+          toggleNetworkLayoutBtn.setHTML("<img src=\"images/chart_organisation.png\"/>");
+        }
+      }
+    });
+    toggleNetworkLayoutBtn.getElement().addClassName("ssaProjMenuPanelBtn");
+    toggleNetworkLayoutBtn.setTitle("Toggle network layout");
+    add(toggleNetworkLayoutBtn);
   }
 
   public void show()

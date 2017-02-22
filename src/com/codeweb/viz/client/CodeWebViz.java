@@ -1,6 +1,6 @@
 package com.codeweb.viz.client;
 
-import com.codeweb.viz.client.layout.LayoutManager;
+import com.codeweb.viz.client.layout.NetworkLayoutManager;
 import com.codeweb.viz.client.upload.SsaFileUploadPopupPanel;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
@@ -19,12 +19,12 @@ public class CodeWebViz implements EntryPoint
   public void onModuleLoad()
   {
     Window.enableScrolling(false);
-    LayoutManager.init();
+    NetworkLayoutManager.init();
     SsaFileUploadPopupPanel.show(false);
     // TODO: BMB - when loading REM, shown Grapd2D with background areas for each package,
     // and bars inside each of those representing the number of times each class in that package
     // was invoked.
-    
-    // TODO: Test on Chrome and FF, still an issue with upload and returned JSON format...
+
+    // TODO: BMB - Test on Chrome and FF, still an issue with upload and returned JSON format...
   }
 }

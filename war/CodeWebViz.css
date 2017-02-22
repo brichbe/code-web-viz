@@ -92,10 +92,11 @@ div.vis-network-tooltip {
 	width: 40px;
 	height: 40px;
 	border-radius: 20px;
+	margin: 0px 6px 0px 6px !important;
 }
 
 .ssaProjMenuPanelBtn:hover {
-	box-shadow: -2px 2px 4px 1px #67768A !important;
+	box-shadow: -2px 2px 4px 1px #6899bd !important;
 }
 
 .gwt-PopupPanelGlass {

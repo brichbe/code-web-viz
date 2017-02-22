@@ -12,9 +12,11 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class LayoutManager
+public class NetworkLayoutManager
 {
   private static final SsaProjectMenuBar ssaProjectMenuBar = new SsaProjectMenuBar();
+
+  private static boolean layoutAsHierarchical = true;
 
   public static void init()
   {
@@ -70,7 +72,7 @@ public class LayoutManager
             {
               if (edgeValues.isEmpty())
               {
-                GwtToJsDispatch.fitNetwork();
+                GwtToJsDispatch.toggleNetworkLayout(layoutAsHierarchical);
                 GwtToJsDispatch.hideNetworkIndeterminateProgress();
                 cancel();
                 return;
@@ -100,5 +102,17 @@ public class LayoutManager
       }
     };
     nodesRepeater.scheduleRepeating(ANIMATE_RATE);
+  }
+
+  public static boolean doLayoutAsHierarchical()
+  {
+    return layoutAsHierarchical;
+  }
+
+  public static boolean toggleHierarchicalLayout()
+  {
+    layoutAsHierarchical = !layoutAsHierarchical;
+    GwtToJsDispatch.toggleNetworkLayout(layoutAsHierarchical);
+    return layoutAsHierarchical;
   }
 }

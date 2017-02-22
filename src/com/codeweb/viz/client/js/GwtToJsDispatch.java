@@ -13,10 +13,10 @@ public class GwtToJsDispatch
   /*-{
 		$wnd.initNetwork(container);
   }-*/;
-  
+
   public static native void clearNetworkData()
   /*-{
-        $wnd.clearNetworkData();
+		$wnd.clearNetworkData();
   }-*/;
 
   public static native void setNetworkData(JavaScriptObject nodesJson, JavaScriptObject edgesJson)
@@ -33,10 +33,15 @@ public class GwtToJsDispatch
   /*-{
 		$wnd.addEdges(edgesJson);
   }-*/;
-  
+
+  public static native void toggleNetworkLayout(boolean asHierarchical)
+  /*-{
+		$wnd.toggleNetworkLayout(asHierarchical);
+  }-*/;
+
   public static native void fitNetwork()
   /*-{
-        $wnd.fitNetwork();
+		$wnd.fitNetwork();
   }-*/;
 
   public static native void logJson(JavaScriptObject json)

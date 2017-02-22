@@ -23,6 +23,10 @@ import com.codeweb.ssa.model.ProjectSrcFile;
 import com.codeweb.ssa.model.ProjectStructure;
 import com.google.gson.Gson;
 
+// TODO: BMB - use a simple database to persist loaded SSA json,
+// allow clients to open these instead of uploading a new SSA doc
+
+// TODO: BMB - separate project that makes a customizable matrix animation
 public class SsaFileUploadServlet extends HttpServlet
 {
   private static final long serialVersionUID = 6479188937373775788L;
