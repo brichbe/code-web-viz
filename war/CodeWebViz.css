@@ -99,6 +99,26 @@ div.vis-network-tooltip {
 	box-shadow: -2px 2px 4px 1px #6899bd !important;
 }
 
+#ssaSearchDismissBtn {
+	width: 20px;
+	height: 20px;
+	padding: 1px;
+	margin: 1px;
+	background: none;
+}
+
+#ssaSearchDismissBtnImg {
+	width: 16px;
+	height: 16px;
+}
+
+.gwt-PopupPanel {
+	border: 2px solid #00CCFF !important;
+	padding: 2px !important;
+	border-radius: 6px !important;
+	z-index: 99 !important;
+}
+
 .gwt-PopupPanelGlass {
 	background-color: rgba(77, 77, 77, 1) !important;
 	background: radial-gradient(gray 20%, black 80%);

@@ -157,3 +157,12 @@ function fitNetwork() {
 function stabilizeNetwork() {
 	network.stabilize();
 }
+
+function focusNetworkOnItem(id) {
+	network.focus(id, {
+		scale : 1.5,
+		animation : {
+			duration : 150
+		}
+	});
+}

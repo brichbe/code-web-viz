@@ -1,12 +1,14 @@
 package com.codeweb.viz.client.ssa;
 
 import com.codeweb.viz.client.layout.NetworkLayoutManager;
+import com.codeweb.viz.client.ssa.search.SsaNetworkSearchPopupPanel;
 import com.codeweb.viz.client.upload.SsaFileUploadPopupPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.PopupPanel.PositionCallback;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SsaProjectMenuBar extends HorizontalPanel
@@ -48,6 +50,27 @@ public class SsaProjectMenuBar extends HorizontalPanel
     toggleNetworkLayoutBtn.getElement().addClassName("ssaProjMenuPanelBtn");
     toggleNetworkLayoutBtn.setTitle("Toggle network layout");
     add(toggleNetworkLayoutBtn);
+
+    final Button searchNetworkBtn = new Button("<img src=\"images/magnifier.png\"/>");
+    searchNetworkBtn.addClickHandler(new ClickHandler()
+    {
+      @Override
+      public void onClick(final ClickEvent event)
+      {
+        SsaNetworkSearchPopupPanel.get().setPopupPositionAndShow(new PositionCallback()
+        {
+          @Override
+          public void setPosition(int offsetWidth, int offsetHeight)
+          {
+            SsaNetworkSearchPopupPanel.get().setPopupPosition(event.getClientX() - offsetWidth + 20,
+                event.getClientY() + offsetHeight);
+          }
+        });
+      }
+    });
+    searchNetworkBtn.getElement().addClassName("ssaProjMenuPanelBtn");
+    searchNetworkBtn.setTitle("Search");
+    add(searchNetworkBtn);
   }
 
   public void setEnabled(boolean enabled)

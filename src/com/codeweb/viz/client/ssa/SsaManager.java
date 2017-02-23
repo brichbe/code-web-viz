@@ -1,10 +1,15 @@
 package com.codeweb.viz.client.ssa;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.codeweb.viz.client.js.GwtToJsDispatch;
 import com.codeweb.viz.client.layout.NetworkLayoutManager;
+import com.codeweb.viz.client.ssa.search.SsaNetworkSearchPopupPanel;
 import com.codeweb.viz.client.upload.SsaFileUploadPopupPanel;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsonUtils;
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 
 public class SsaManager
@@ -20,6 +25,15 @@ public class SsaManager
           .get("numPkgs").isNumber().doubleValue(), (int) responseObj.get("numSrcFiles").isNumber().doubleValue(),
           (int) responseObj.get("totalSloc").isNumber().doubleValue(), responseObj.get("nodes").isArray(), responseObj.get(
               "edges").isArray());
+
+      Map<String, String> searchableItemLabelToId = new HashMap<>();
+      JSONArray nodesArray = responseObj.get("nodes").isArray();
+      for (int i = 0; i < nodesArray.size(); i++)
+      {
+        JSONObject nodeVal = nodesArray.get(i).isObject();
+        searchableItemLabelToId.put(nodeVal.get("label").isString().stringValue(), nodeVal.get("id").isString().stringValue());
+      }
+      SsaNetworkSearchPopupPanel.get().updateSearchableItems(searchableItemLabelToId);
       NetworkLayoutManager.clearNetwork();
       NetworkLayoutManager.displayNetwork(loadedSsaProject);
     }
