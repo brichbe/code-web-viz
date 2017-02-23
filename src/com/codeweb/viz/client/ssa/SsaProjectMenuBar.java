@@ -5,7 +5,9 @@ import com.codeweb.viz.client.upload.SsaFileUploadPopupPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public class SsaProjectMenuBar extends HorizontalPanel
 {
@@ -48,14 +50,15 @@ public class SsaProjectMenuBar extends HorizontalPanel
     add(toggleNetworkLayoutBtn);
   }
 
-  // TODO: Change this to disable/enable
-  public void show()
+  public void setEnabled(boolean enabled)
   {
-    super.setVisible(true);
-  }
-
-  public void hide()
-  {
-    super.setVisible(false);
+    for (int i = 0; i < getWidgetCount(); i++)
+    {
+      Widget w = getWidget(i);
+      if (w instanceof FocusWidget)
+      {
+        ((FocusWidget) w).setEnabled(enabled);
+      }
+    }
   }
 }

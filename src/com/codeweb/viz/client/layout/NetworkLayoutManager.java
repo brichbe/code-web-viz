@@ -26,7 +26,7 @@ public class NetworkLayoutManager
   {
     GwtToJsDispatch.initNetwork(DOM.getElementById("vizSourceStructureNetwork"));
     RootPanel.get("contentArea").add(ssaProjectMenuBar);
-    ssaProjectMenuBar.hide();
+    ssaProjectMenuBar.setEnabled(false);
   }
 
   public static void clearNetwork()
@@ -36,7 +36,7 @@ public class NetworkLayoutManager
 
   public static void displayNetwork(SsaProjectNetworkData ssaNetworkData)
   {
-    ssaProjectMenuBar.hide();
+    ssaProjectMenuBar.setEnabled(false);
 
     Element headerTitle = DOM.getElementById("headerTitle");
     headerTitle.setInnerHTML("CodeWeb Vizualization - <i>\"" + ssaNetworkData.getProjectName() + "\"</i>");
@@ -48,6 +48,14 @@ public class NetworkLayoutManager
     final JSONArray nodesArray = ssaNetworkData.getNetworkNodes();
     final JSONArray edgesArray = ssaNetworkData.getNetworkEdges();
     final int totalNetworkObjs = nodesArray.size() + edgesArray.size();
+    final NetworkBuiltCallback completionCallback = new NetworkBuiltCallback()
+    {
+      @Override
+      public void onNetworkBuildComplete()
+      {
+        ssaProjectMenuBar.setEnabled(true);
+      }
+    };
     Scheduler.get().scheduleDeferred(new ScheduledCommand()
     {
       @Override
@@ -55,19 +63,19 @@ public class NetworkLayoutManager
       {
         if (totalNetworkObjs <= 250)
         {
-          buildNetworkByChunks(nodesArray, edgesArray);
+          buildNetworkByChunks(nodesArray, edgesArray, completionCallback);
         }
         else
         {
-          buildNetworkAllAtOnce(nodesArray, edgesArray);
+          buildNetworkAllAtOnce(nodesArray, edgesArray, completionCallback);
         }
-        ssaProjectMenuBar.show();
       }
     });
   }
 
   // TODO: BMB - Reassess this logic/performance with the next VisJs version.
-  private static void buildNetworkAllAtOnce(final JSONArray nodesArray, final JSONArray edgesArray)
+  private static void buildNetworkAllAtOnce(final JSONArray nodesArray, final JSONArray edgesArray,
+      final NetworkBuiltCallback callback)
   {
     GwtToJsDispatch.showNetworkIndeterminateProgress();
     final Timer delayTimer = new Timer()
@@ -88,6 +96,7 @@ public class NetworkLayoutManager
             }
             GwtToJsDispatch.fitNetwork();
             GwtToJsDispatch.hideNetworkIndeterminateProgress();
+            callback.onNetworkBuildComplete();
           }
         };
         delayTimer2.schedule(250);
@@ -96,7 +105,8 @@ public class NetworkLayoutManager
     delayTimer.schedule(250);
   }
 
-  private static void buildNetworkByChunks(final JSONArray nodesArray, final JSONArray edgesArray)
+  private static void buildNetworkByChunks(final JSONArray nodesArray, final JSONArray edgesArray,
+      final NetworkBuiltCallback callback)
   {
     GwtToJsDispatch.showNetworkDeterminateProgress();
 
@@ -141,6 +151,7 @@ public class NetworkLayoutManager
                 }
                 GwtToJsDispatch.fitNetwork();
                 GwtToJsDispatch.hideNetworkDeterminateProgress();
+                callback.onNetworkBuildComplete();
                 cancel();
                 return;
               }
@@ -190,6 +201,7 @@ public class NetworkLayoutManager
   public static boolean toggleHierarchicalLayout()
   {
     layoutAsHierarchical = !layoutAsHierarchical;
+    ssaProjectMenuBar.setEnabled(false);
     clearNetwork();
     GwtToJsDispatch.toggleNetworkLayout(layoutAsHierarchical);
     SsaProjectNetworkData networkData = SsaManager.getLoadedSsaProject();
@@ -198,5 +210,10 @@ public class NetworkLayoutManager
       displayNetwork(networkData);
     }
     return layoutAsHierarchical;
+  }
+
+  private static interface NetworkBuiltCallback
+  {
+    void onNetworkBuildComplete();
   }
 }

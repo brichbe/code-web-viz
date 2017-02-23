@@ -106,6 +106,10 @@ div.vis-network-tooltip {
 	z-index: 99;
 }
 
+[disabled].gwt-Button {
+	opacity: 0.2 !important;
+}
+
 .ui-mprogress .bar-bg, .ui-mprogress .buffer-bg, .ui-mprogress .deter-bar,
 	.ui-mprogress .indeter-bar, .ui-mprogress .mp-ui-dashed, .ui-mprogress .query-bar
 	{
