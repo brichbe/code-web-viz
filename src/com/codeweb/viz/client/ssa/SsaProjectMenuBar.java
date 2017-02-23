@@ -48,6 +48,7 @@ public class SsaProjectMenuBar extends HorizontalPanel
     add(toggleNetworkLayoutBtn);
   }
 
+  // TODO: Change this to disable/enable
   public void show()
   {
     super.setVisible(true);

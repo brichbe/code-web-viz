@@ -105,3 +105,9 @@ div.vis-network-tooltip {
 	opacity: 0.8 !important;
 	z-index: 99;
 }
+
+.ui-mprogress .bar-bg, .ui-mprogress .buffer-bg, .ui-mprogress .deter-bar,
+	.ui-mprogress .indeter-bar, .ui-mprogress .mp-ui-dashed, .ui-mprogress .query-bar
+	{
+	height: 6px !important;
+}

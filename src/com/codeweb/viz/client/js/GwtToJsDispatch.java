@@ -44,6 +44,11 @@ public class GwtToJsDispatch
 		$wnd.fitNetwork();
   }-*/;
 
+  public static native void stabilizeNetwork()
+  /*-{
+		$wnd.stabilizeNetwork();
+  }-*/;
+
   public static native void logJson(JavaScriptObject json)
   /*-{
 		console.log(JSON.stringify(json, null, 4));
@@ -67,5 +72,20 @@ public class GwtToJsDispatch
   public static native void hideNetworkIndeterminateProgress()
   /*-{
 		$wnd.stopNetworkIndeterminateProgress();
+  }-*/;
+
+  public static native void showNetworkDeterminateProgress()
+  /*-{
+		$wnd.startNetworkDeterminateProgress();
+  }-*/;
+
+  public static native void setNetworkDeterminateProgress(double percentage)
+  /*-{
+		$wnd.setNetworkDeterminateProgress(percentage);
+  }-*/;
+
+  public static native void hideNetworkDeterminateProgress()
+  /*-{
+		$wnd.stopNetworkDeterminateProgress();
   }-*/;
 }

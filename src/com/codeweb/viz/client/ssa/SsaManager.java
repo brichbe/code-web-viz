@@ -9,16 +9,19 @@ import com.google.gwt.json.client.JSONObject;
 
 public class SsaManager
 {
+  private static SsaProjectNetworkData loadedSsaProject = null;
+
   public static void handleSsaFileLoaded(String ssaNetworkJson)
   {
     try
     {
-      // TODO: BMB - format these numbers...
       JSONObject responseObj = new JSONObject(JsonUtils.safeEval(ssaNetworkJson));
-      NetworkLayoutManager.displayNetwork(responseObj.get("projName").isString().stringValue(), responseObj.get("numPkgs").toString()
-          + " packages,  " + responseObj.get("numSrcFiles").toString() + " source files,  "
-          + responseObj.get("totalSloc").toString() + " total SLOC", responseObj.get("nodes").isArray(), responseObj.get("edges")
-          .isArray());
+      loadedSsaProject = new SsaProjectNetworkData(responseObj.get("projName").isString().stringValue(), (int) responseObj
+          .get("numPkgs").isNumber().doubleValue(), (int) responseObj.get("numSrcFiles").isNumber().doubleValue(),
+          (int) responseObj.get("totalSloc").isNumber().doubleValue(), responseObj.get("nodes").isArray(), responseObj.get(
+              "edges").isArray());
+      NetworkLayoutManager.clearNetwork();
+      NetworkLayoutManager.displayNetwork(loadedSsaProject);
     }
     catch (Exception e)
     {
@@ -26,5 +29,10 @@ public class SsaManager
       GwtToJsDispatch.promptError("Data Error", "Unable to render the SSA network data. Try again or choose another file.");
       SsaFileUploadPopupPanel.show(false);
     }
+  }
+
+  public static SsaProjectNetworkData getLoadedSsaProject()
+  {
+    return loadedSsaProject;
   }
 }

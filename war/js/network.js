@@ -89,11 +89,6 @@ function initNetwork(container) {
 			}
 		}
 	});
-	network.on("stabilized", function() {
-		window.setTimeout(function() {
-			fitNetwork();
-		}, 50);
-	});
 }
 
 function setNetworkData(nodesJson, edgesJson) {
@@ -130,7 +125,7 @@ function toggleNetworkLayout(asHierarchical) {
 				nodeSpacing : 200,
 				sortMethod : 'directed'
 			},
-			improvedLayout : true
+			improvedLayout : false
 		};
 		options.physics = {
 			enabled : false,
@@ -138,8 +133,6 @@ function toggleNetworkLayout(asHierarchical) {
 				enabled : false,
 			}
 		};
-		network.setOptions(JSON.parse(JSON.stringify(options)));
-		fitNetwork();
 	} else {
 		options.layout.hierarchical = false;
 		options.physics = {
@@ -149,9 +142,8 @@ function toggleNetworkLayout(asHierarchical) {
 				enabled : true
 			}
 		};
-		network.setOptions(JSON.parse(JSON.stringify(options)));
-		network.stabilize();
 	}
+	network.setOptions(JSON.parse(JSON.stringify(options)));
 }
 
 function fitNetwork() {
@@ -160,4 +152,8 @@ function fitNetwork() {
 			duration : 150
 		}
 	});
+}
+
+function stabilizeNetwork() {
+	network.stabilize();
 }
