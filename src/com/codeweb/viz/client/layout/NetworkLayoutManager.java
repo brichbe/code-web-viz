@@ -10,6 +10,7 @@ import com.codeweb.viz.client.ssa.SsaProjectNetworkData;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.DOM;
@@ -41,9 +42,9 @@ public class NetworkLayoutManager
     Element headerTitle = DOM.getElementById("headerTitle");
     headerTitle.setInnerHTML("CodeWeb Vizualization - <i>\"" + ssaNetworkData.getProjectName() + "\"</i>");
     Element projDetailsEl = DOM.getElementById("headerProjectDetails");
-    // TODO: BMB - format these numbers...
-    projDetailsEl.setInnerHTML(ssaNetworkData.getNumPackages() + " packages,  " + ssaNetworkData.getNumSourceFiles()
-        + " source files,  " + ssaNetworkData.getTotalSloc() + " total SLOC");
+    projDetailsEl.setInnerHTML(NumberFormat.getDecimalFormat().format(ssaNetworkData.getNumPackages()) + " packages,  "
+        + NumberFormat.getDecimalFormat().format(ssaNetworkData.getNumSourceFiles()) + " source files,  "
+        + NumberFormat.getDecimalFormat().format(ssaNetworkData.getTotalSloc()) + " total SLOC");
 
     final JSONArray nodesArray = ssaNetworkData.getNetworkNodes();
     final JSONArray edgesArray = ssaNetworkData.getNetworkEdges();
