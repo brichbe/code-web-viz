@@ -79,8 +79,8 @@ div.vis-network-tooltip {
 
 #ssaProjMenuPanel {
 	position: absolute;
-	top: 30px;
-	right: 30px;
+	top: 34px;
+	right: 26px;
 	z-index: 90;
 }
 
@@ -89,10 +89,15 @@ div.vis-network-tooltip {
 	border: none !important;
 	box-shadow: -2px 2px 4px 1px white;
 	background: none !important;
-	width: 40px;
-	height: 40px;
-	border-radius: 20px;
+	width: 32px;
+	height: 32px;
+	border-radius: 16px;
 	margin: 0px 6px 0px 6px !important;
+}
+
+.ssaProjMenuPanelBtnImg {
+	width: 24px;
+	height: 24px;
 }
 
 .ssaProjMenuPanelBtn:hover {

@@ -18,19 +18,20 @@ public class SsaProjectMenuBar extends HorizontalPanel
     super();
     getElement().setId("ssaProjMenuPanel");
 
-    final Button reloadSsaProjBtn = new Button("<img src=\"images/arrow_refresh.png\"/>", new ClickHandler()
-    {
-      @Override
-      public void onClick(ClickEvent event)
-      {
-        SsaFileUploadPopupPanel.show(true);
-      }
-    });
+    final Button reloadSsaProjBtn = new Button("<img src=\"images/arrow_refresh.png\" class=\"ssaProjMenuPanelBtnImg\"/>",
+        new ClickHandler()
+        {
+          @Override
+          public void onClick(ClickEvent event)
+          {
+            SsaFileUploadPopupPanel.show(true);
+          }
+        });
     reloadSsaProjBtn.getElement().addClassName("ssaProjMenuPanelBtn");
     reloadSsaProjBtn.setTitle("Load a new SSA project");
     add(reloadSsaProjBtn);
 
-    final Button toggleNetworkLayoutBtn = new Button("<img src=\"images/molecule.png\"/>");
+    final Button toggleNetworkLayoutBtn = new Button("<img src=\"images/molecule.png\" class=\"ssaProjMenuPanelBtnImg\"/>");
     toggleNetworkLayoutBtn.addClickHandler(new ClickHandler()
     {
       @Override
@@ -39,11 +40,11 @@ public class SsaProjectMenuBar extends HorizontalPanel
         boolean hierLayout = NetworkLayoutManager.toggleHierarchicalLayout();
         if (hierLayout)
         {
-          toggleNetworkLayoutBtn.setHTML("<img src=\"images/molecule.png\"/>");
+          toggleNetworkLayoutBtn.setHTML("<img src=\"images/molecule.png\" class=\"ssaProjMenuPanelBtnImg\"/>");
         }
         else
         {
-          toggleNetworkLayoutBtn.setHTML("<img src=\"images/chart_organisation.png\"/>");
+          toggleNetworkLayoutBtn.setHTML("<img src=\"images/chart_organisation.png\" class=\"ssaProjMenuPanelBtnImg\"/>");
         }
       }
     });
@@ -51,7 +52,7 @@ public class SsaProjectMenuBar extends HorizontalPanel
     toggleNetworkLayoutBtn.setTitle("Toggle network layout");
     add(toggleNetworkLayoutBtn);
 
-    final Button searchNetworkBtn = new Button("<img src=\"images/magnifier.png\"/>");
+    final Button searchNetworkBtn = new Button("<img src=\"images/magnifier.png\" class=\"ssaProjMenuPanelBtnImg\"/>");
     searchNetworkBtn.addClickHandler(new ClickHandler()
     {
       @Override
