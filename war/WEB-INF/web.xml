@@ -8,6 +8,13 @@
 	<welcome-file-list>
 		<welcome-file>CodeWebViz.html</welcome-file>
 	</welcome-file-list>
+	
+	<!-- Listeners -->
+	<listener>  
+    	<listener-class>
+        	com.codeweb.viz.server.applistener.AppContextListener
+    	</listener-class>
+	</listener>
 
 	<!-- Servlets -->
 	<servlet>

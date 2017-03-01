@@ -21,6 +21,8 @@ import org.json.JSONObject;
 import com.codeweb.ssa.model.ProjectPackage;
 import com.codeweb.ssa.model.ProjectSrcFile;
 import com.codeweb.ssa.model.ProjectStructure;
+import com.codeweb.viz.server.db.DbApi;
+import com.codeweb.viz.server.db.dao.SsaProjectDao;
 import com.google.gson.Gson;
 
 // TODO: BMB - use a simple database to persist loaded SSA json,
@@ -68,10 +70,26 @@ public class SsaFileUploadServlet extends HttpServlet
     }
   }
 
+  private static void persist(ProjectStructure project)
+  {
+    // TODO: BMB - refactor...
+    System.out.println("Saving project: " + project.getProjName());
+    String json = new Gson().toJson(project);
+    DbApi.save(new SsaProjectDao(project.getProjName(), json));
+    System.out.println("Finished Saving project");
+    Collection<SsaProjectDao> saved = DbApi.getAll();
+    System.out.println("After saving, now there are: " + saved.size());
+    for (SsaProjectDao s : saved)
+    {
+      System.out.println(s.getName() + " (" + s.getId() + ")");
+    }
+  }
+
   private static JSONObject parseSsaContents(String ssaFileContents) throws Exception
   {
     JSONObject responseObj = new JSONObject();
     ProjectStructure project = new Gson().fromJson(ssaFileContents, ProjectStructure.class);
+    persist(project);
 
     JSONArray nodesArray = new JSONArray();
     JSONArray edgesArray = new JSONArray();

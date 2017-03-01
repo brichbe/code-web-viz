@@ -12,6 +12,7 @@ import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 
+// TODO: BMB - handle right clicks on network nodes with initial option to focus on
 public class SsaManager
 {
   private static SsaProjectNetworkData loadedSsaProject = null;
