@@ -15,11 +15,13 @@ public class SsaProjectDao implements Serializable
   private long id;
   private String name;
   private String json;
+  private long createDtg;
 
   public SsaProjectDao(String name, String json)
   {
     this.name = name;
     this.json = json;
+    this.createDtg = System.currentTimeMillis();
   }
 
   public long getId()
@@ -37,4 +39,8 @@ public class SsaProjectDao implements Serializable
     return json;
   }
 
+  public long getCreateDtg()
+  {
+    return createDtg;
+  }
 }

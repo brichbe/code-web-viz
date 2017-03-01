@@ -60,7 +60,9 @@ public class SsaFileUploadServlet extends HttpServlet
           }
 
           String uploadFileContents = new String(out.toByteArray());
-          String json = StringEscapeUtils.escapeHtml4(parseSsaContents(uploadFileContents).toString());
+          ProjectStructure project = parseSsaContents(uploadFileContents);
+          persist(project, uploadFileContents);
+          String json = StringEscapeUtils.escapeHtml4(createSsaNetworkJson(project).toString());
           resp.getWriter().write(json);
           resp.getWriter().flush();
           break;
@@ -74,27 +76,34 @@ public class SsaFileUploadServlet extends HttpServlet
     }
   }
 
-  private static void persist(ProjectStructure project)
+  private static void persist(ProjectStructure project, String projectJson)
   {
-    // TODO: BMB - refactor...
-    LOG.info("Saving project: " + project.getProjName());
-    String json = new Gson().toJson(project);
-    DbApi.save(new SsaProjectDao(project.getProjName(), json));
-    LOG.info("Finished Saving project");
     Collection<SsaProjectDao> saved = DbApi.getAll();
-    LOG.info("After saving, now there are: " + saved.size());
+    String projName = project.getProjName();
+    projectJson = projectJson.replaceAll("\\s", "");
+    boolean found = false;
     for (SsaProjectDao s : saved)
     {
-      LOG.info(s.getName() + " (" + s.getId() + ")");
+      if (projName.equals(s.getName()) && projectJson.equals(s.getJson()))
+      {
+        found = true;
+        break;
+      }
+    }
+    if (!found)
+    {
+      LOG.info("Saving project: " + projName);
+      DbApi.save(new SsaProjectDao(projName, projectJson));
     }
   }
 
-  private static JSONObject parseSsaContents(String ssaFileContents) throws Exception
+  private static ProjectStructure parseSsaContents(String ssaFileContents) throws Exception
   {
-    JSONObject responseObj = new JSONObject();
-    ProjectStructure project = new Gson().fromJson(ssaFileContents, ProjectStructure.class);
-    persist(project);
+    return new Gson().fromJson(ssaFileContents, ProjectStructure.class);
+  }
 
+  private static JSONObject createSsaNetworkJson(ProjectStructure project) throws Exception
+  {
     JSONArray nodesArray = new JSONArray();
     JSONArray edgesArray = new JSONArray();
     Collection<ProjectPackage> packages = project.getTopPackages();
@@ -113,6 +122,8 @@ public class SsaFileUploadServlet extends HttpServlet
         totalSloc += node.getInt("slocCount");
       }
     }
+
+    JSONObject responseObj = new JSONObject();
     responseObj.put("numPkgs", nodesArray.length() - numSrcFiles);
     responseObj.put("numSrcFiles", numSrcFiles);
     responseObj.put("totalSloc", totalSloc);
