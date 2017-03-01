@@ -19,11 +19,18 @@
 	<!-- Servlets -->
 	<servlet>
 		<servlet-name>ssaFileUploadServlet</servlet-name>
-		<servlet-class>com.codeweb.viz.server.SsaFileUploadServlet</servlet-class>
+		<servlet-class>com.codeweb.viz.server.service.SsaFileUploadServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ssaFileUploadServlet</servlet-name>
 		<url-pattern>/codewebviz/ssaFileUpload</url-pattern>
 	</servlet-mapping>
-
+	<servlet>
+		<servlet-name>ssaProjectsServiceServlet</servlet-name>
+		<servlet-class>com.codeweb.viz.server.service.SsaProjectsServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ssaProjectsServiceServlet</servlet-name>
+		<url-pattern>/codewebviz/ssaprojectsservice</url-pattern>
+	</servlet-mapping>
 </web-app>

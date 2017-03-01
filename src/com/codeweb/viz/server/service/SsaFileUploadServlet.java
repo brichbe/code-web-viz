@@ -1,4 +1,4 @@
-package com.codeweb.viz.server;
+package com.codeweb.viz.server.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -1,8 +1,13 @@
 package com.codeweb.viz.client.upload;
 
+import java.util.Collection;
+
 import com.codeweb.viz.client.CodeWebViz;
 import com.codeweb.viz.client.js.GwtToJsDispatch;
 import com.codeweb.viz.client.ssa.SsaManager;
+import com.codeweb.viz.shared.dto.SavedSsaProjectDto;
+import com.codeweb.viz.shared.serviceapi.SsaProjectsService;
+import com.codeweb.viz.shared.serviceapi.SsaProjectsServiceAsync;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Position;
@@ -13,6 +18,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
@@ -143,6 +149,24 @@ public class SsaFileUploadPopupPanel
 
   public static synchronized void show(boolean allowClose)
   {
+
+    // TODO: BMB - test...
+    SsaProjectsServiceAsync ssaSvc = GWT.create(SsaProjectsService.class);
+    ssaSvc.getSavedProjects(new AsyncCallback<Collection<SavedSsaProjectDto>>()
+    {
+      @Override
+      public void onSuccess(Collection<SavedSsaProjectDto> result)
+      {
+        GWT.log("Got result: " + result.size());
+      }
+
+      @Override
+      public void onFailure(Throwable caught)
+      {
+        GwtToJsDispatch.promptError("Error", "Failed to retrieve the list of saved projects.");
+      }
+    });
+    
     allowEscToClose = allowClose;
     popupPanel.center();
   }
