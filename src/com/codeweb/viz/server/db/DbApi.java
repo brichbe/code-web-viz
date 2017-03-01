@@ -6,25 +6,34 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import com.codeweb.viz.server.db.dao.SsaProjectDao;
+import org.slf4j.Logger;
 
-// TODO: BMB - here and elsewhere use logger
+import com.codeweb.viz.server.db.dao.SsaProjectDao;
+import com.codeweb.viz.server.log.LoggerFactory;
 
 // TODO: BMB - commit lib jars
 public class DbApi
 {
+  private static final Logger LOG = LoggerFactory.createLogger(DbApi.class);
+
   private static EntityManagerFactory ssaProjectsEmf;
 
   public static synchronized void init()
   {
+    LOG.info("Starting to init DB...");
+
     com.objectdb.Enhancer.enhance("com.codeweb.viz.server.db.dao.*");
 
     ssaProjectsEmf = Persistence.createEntityManagerFactory("$objectdb/db/ssaProjects.odb");
+    LOG.info("Init complete");
   }
 
   public static synchronized void close()
   {
+    LOG.info("Starting to close DB connection...");
+
     ssaProjectsEmf.close();
+    LOG.info("Close complete");
   }
 
   public static synchronized void save(SsaProjectDao ssaDao)

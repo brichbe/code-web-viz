@@ -17,21 +17,25 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
 
 import com.codeweb.ssa.model.ProjectPackage;
 import com.codeweb.ssa.model.ProjectSrcFile;
 import com.codeweb.ssa.model.ProjectStructure;
 import com.codeweb.viz.server.db.DbApi;
 import com.codeweb.viz.server.db.dao.SsaProjectDao;
+import com.codeweb.viz.server.log.LoggerFactory;
 import com.google.gson.Gson;
 
-// TODO: BMB - use a simple database to persist loaded SSA json,
-// allow clients to open these instead of uploading a new SSA doc
+// TODO: BMB - allow clients to open persisted instead of uploading a new SSA
+// doc
 
 // TODO: BMB - separate project that makes a customizable matrix animation
 public class SsaFileUploadServlet extends HttpServlet
 {
   private static final long serialVersionUID = 6479188937373775788L;
+
+  private static final Logger LOG = LoggerFactory.createLogger(SsaFileUploadServlet.class);
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -65,7 +69,7 @@ public class SsaFileUploadServlet extends HttpServlet
     }
     catch (Exception e)
     {
-      System.err.println("Error parsing SSA file: " + e.getMessage());
+      LOG.error("Error parsing SSA file: " + e.getMessage(), e);
       return;
     }
   }
@@ -73,15 +77,15 @@ public class SsaFileUploadServlet extends HttpServlet
   private static void persist(ProjectStructure project)
   {
     // TODO: BMB - refactor...
-    System.out.println("Saving project: " + project.getProjName());
+    LOG.info("Saving project: " + project.getProjName());
     String json = new Gson().toJson(project);
     DbApi.save(new SsaProjectDao(project.getProjName(), json));
-    System.out.println("Finished Saving project");
+    LOG.info("Finished Saving project");
     Collection<SsaProjectDao> saved = DbApi.getAll();
-    System.out.println("After saving, now there are: " + saved.size());
+    LOG.info("After saving, now there are: " + saved.size());
     for (SsaProjectDao s : saved)
     {
-      System.out.println(s.getName() + " (" + s.getId() + ")");
+      LOG.info(s.getName() + " (" + s.getId() + ")");
     }
   }
 
