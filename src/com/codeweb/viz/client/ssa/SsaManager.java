@@ -6,7 +6,7 @@ import java.util.Map;
 import com.codeweb.viz.client.js.GwtToJsDispatch;
 import com.codeweb.viz.client.layout.NetworkLayoutManager;
 import com.codeweb.viz.client.ssa.search.SsaNetworkSearchPopupPanel;
-import com.codeweb.viz.client.upload.SsaFileUploadPopupPanel;
+import com.codeweb.viz.client.upload.SsaLoadProjectPopupPanel;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.json.client.JSONArray;
@@ -42,7 +42,7 @@ public class SsaManager
     {
       GWT.log("Failed to parse SSA file load response", e);
       GwtToJsDispatch.promptError("Data Error", "Unable to render the SSA network data. Try again or choose another file.");
-      SsaFileUploadPopupPanel.show(false);
+      SsaLoadProjectPopupPanel.show(false);
     }
   }
 

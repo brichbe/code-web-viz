@@ -2,7 +2,7 @@ package com.codeweb.viz.client.ssa;
 
 import com.codeweb.viz.client.layout.NetworkLayoutManager;
 import com.codeweb.viz.client.ssa.search.SsaNetworkSearchPopupPanel;
-import com.codeweb.viz.client.upload.SsaFileUploadPopupPanel;
+import com.codeweb.viz.client.upload.SsaLoadProjectPopupPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -24,7 +24,7 @@ public class SsaProjectMenuBar extends HorizontalPanel
           @Override
           public void onClick(ClickEvent event)
           {
-            SsaFileUploadPopupPanel.show(true);
+            SsaLoadProjectPopupPanel.show(true);
           }
         });
     reloadSsaProjBtn.getElement().addClassName("ssaProjMenuPanelBtn");

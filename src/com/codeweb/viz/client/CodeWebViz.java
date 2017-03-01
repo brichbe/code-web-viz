@@ -1,7 +1,7 @@
 package com.codeweb.viz.client;
 
 import com.codeweb.viz.client.layout.NetworkLayoutManager;
-import com.codeweb.viz.client.upload.SsaFileUploadPopupPanel;
+import com.codeweb.viz.client.upload.SsaLoadProjectPopupPanel;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
 
@@ -20,7 +20,7 @@ public class CodeWebViz implements EntryPoint
   {
     Window.enableScrolling(false);
     NetworkLayoutManager.init();
-    SsaFileUploadPopupPanel.show(false);
+    SsaLoadProjectPopupPanel.show(false);
     // TODO: BMB - when loading REM, shown Grapd2D with background areas for each package,
     // and bars inside each of those representing the number of times each class in that package
     // was invoked.

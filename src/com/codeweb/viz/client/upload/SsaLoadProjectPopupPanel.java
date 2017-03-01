@@ -1,6 +1,8 @@
 package com.codeweb.viz.client.upload;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import com.codeweb.viz.client.CodeWebViz;
 import com.codeweb.viz.client.js.GwtToJsDispatch;
@@ -8,14 +10,20 @@ import com.codeweb.viz.client.ssa.SsaManager;
 import com.codeweb.viz.shared.dto.SavedSsaProjectDto;
 import com.codeweb.viz.shared.serviceapi.SsaProjectsService;
 import com.codeweb.viz.shared.serviceapi.SsaProjectsServiceAsync;
+import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -29,15 +37,22 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.NoSelectionModel;
 
 // TODO: BMB - Also support uploading a zip file that contains src,
 // extracts on server, and creates the SSA file from it,
 // then proceeds to parse and display that network.
-public class SsaFileUploadPopupPanel
+public class SsaLoadProjectPopupPanel
 {
+  public static final DateTimeFormat DATE_TIME_FORMAT_MED_NO_SECS = DateTimeFormat.getFormat("yyyy MMMM d HH:mm");
+  private static final SsaProjectsServiceAsync ssaSvc = GWT.create(SsaProjectsService.class);
   private static boolean allowEscToClose = false;
   private static final PopupPanel popupPanel = new PopupPanel(false);
+  private static final ListDataProvider<SavedSsaProjectDto> savedSsaProjectsDataProvider = new ListDataProvider<SavedSsaProjectDto>();
   static
   {
     popupPanel.setAnimationEnabled(false);
@@ -45,14 +60,39 @@ public class SsaFileUploadPopupPanel
     popupPanel.setModal(false);
     popupPanel.getElement().setId("fileUploadPopupPanel");
 
-    VerticalPanel headerPanel = new VerticalPanel();
+    VerticalPanel vPanel = new VerticalPanel();
+    vPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+    vPanel.add(createSsaFileUploadPanel());
+    vPanel.add(createHrSeparator());
+    vPanel.add(createSsaProjectsList());
+    popupPanel.setWidget(vPanel);
+
+    Event.addNativePreviewHandler(new Event.NativePreviewHandler()
+    {
+      @Override
+      public void onPreviewNativeEvent(NativePreviewEvent event)
+      {
+        if (allowEscToClose && popupPanel.isShowing())
+        {
+          if (Event.ONKEYDOWN == event.getTypeInt())
+          {
+            NativeEvent ne = event.getNativeEvent();
+            if (KeyCodes.KEY_ESCAPE == ne.getKeyCode())
+            {
+              hide();
+            }
+          }
+        }
+      }
+    });
+  }
+
+  private static Widget createSsaFileUploadPanel()
+  {
     Label headerLabel = new Label("Upload Source Structure File (.ssa)");
-    headerLabel.getElement().setId("fileUploadPopupPanelHeader");
-    headerPanel.add(headerLabel);
-    headerPanel.add(new HTML("<hr/>"));
+    headerLabel.getElement().addClassName("fileUploadHeaderLabel");
 
     Image img = new Image("images/upload.png");
-    img.setSize("64px", "64px");
     img.getElement().setId("fileUploadPopupPanelImg");
     img.setTitle("Choose file to upload");
 
@@ -121,43 +161,52 @@ public class SsaFileUploadPopupPanel
     DockPanel mainPanel = new DockPanel();
     mainPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
     mainPanel.setSpacing(8);
-    mainPanel.add(headerPanel, DockPanel.NORTH);
+    mainPanel.add(headerLabel, DockPanel.NORTH);
     mainPanel.add(img, DockPanel.CENTER);
     mainPanel.add(fileUploadForm, DockPanel.SOUTH);
-
-    popupPanel.setWidget(mainPanel);
-
-    Event.addNativePreviewHandler(new Event.NativePreviewHandler()
-    {
-      @Override
-      public void onPreviewNativeEvent(NativePreviewEvent event)
-      {
-        if (allowEscToClose && popupPanel.isShowing())
-        {
-          if (Event.ONKEYDOWN == event.getTypeInt())
-          {
-            NativeEvent ne = event.getNativeEvent();
-            if (KeyCodes.KEY_ESCAPE == ne.getKeyCode())
-            {
-              hide();
-            }
-          }
-        }
-      }
-    });
+    return mainPanel;
   }
 
-  public static synchronized void show(boolean allowClose)
+  private static Widget createHrSeparator()
   {
+    return new HTML("<div id=\"hrWithCenterText\">OR</div>");
+  }
 
-    // TODO: BMB - test...
-    SsaProjectsServiceAsync ssaSvc = GWT.create(SsaProjectsService.class);
+  private static Widget createSsaProjectsList()
+  {
+    Label headerLabel = new Label("Load an Existing SSA Project");
+    headerLabel.getElement().addClassName("fileUploadHeaderLabel");
+
+    CellList<SavedSsaProjectDto> ssaProjectsList = new CellList<SavedSsaProjectDto>(new SavedSsaProjectCell());
+    ssaProjectsList.getElement().getStyle().setProperty("margin", "auto");
+    ssaProjectsList.setTitle("Choose an existing project to load");
+    ssaProjectsList.setSelectionModel(new NoSelectionModel<SavedSsaProjectDto>());
+    ssaProjectsList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.DISABLED);
+    savedSsaProjectsDataProvider.addDataDisplay(ssaProjectsList);
+
+    ScrollPanel scroller = new ScrollPanel(ssaProjectsList);
+    scroller.setHeight("100px");
+    scroller.getElement().getStyle().setProperty("border", "3px groove lightgray");
+    scroller.getElement().getStyle().setProperty("borderRadius", "4px");
+    scroller.getElement().getStyle().setMargin(8, Unit.PX);
+    scroller.getElement().getStyle().setPadding(4, Unit.PX);
+
+    VerticalPanel panel = new VerticalPanel();
+    panel.add(headerLabel);
+    panel.add(scroller);
+    return panel;
+  }
+
+  private static void populateSavedSsaProjectsList()
+  {
     ssaSvc.getSavedProjects(new AsyncCallback<Collection<SavedSsaProjectDto>>()
     {
       @Override
       public void onSuccess(Collection<SavedSsaProjectDto> result)
       {
-        GWT.log("Got result: " + result.size());
+        savedSsaProjectsDataProvider.getList().clear();
+        // TODO: BMB - sort list by name
+        savedSsaProjectsDataProvider.setList(new ArrayList<SavedSsaProjectDto>(result));
       }
 
       @Override
@@ -166,13 +215,43 @@ public class SsaFileUploadPopupPanel
         GwtToJsDispatch.promptError("Error", "Failed to retrieve the list of saved projects.");
       }
     });
-    
+  }
+
+  public static synchronized void show(boolean allowClose)
+  {
     allowEscToClose = allowClose;
     popupPanel.center();
+    populateSavedSsaProjectsList();
   }
 
   private static synchronized void hide()
   {
     popupPanel.hide();
+  }
+
+  private static class SavedSsaProjectCell extends AbstractCell<SavedSsaProjectDto>
+  {
+    public SavedSsaProjectCell()
+    {
+      super();
+    }
+
+    @Override
+    public void render(Context context, SavedSsaProjectDto value, SafeHtmlBuilder sb)
+    {
+      if (value != null)
+      {
+        sb.appendHtmlConstant("<table style='border-bottom: 1px solid rgb(150, 150, 150); margin-bottom: 6px; width: 100%'>");
+        sb.appendHtmlConstant("<tr><td style='font-size:1.2em; font-weight: bold; color: white'>");
+        sb.appendEscaped(value.getName());
+        sb.appendHtmlConstant("</td><td rowspan='2' style='padding-left: 10px'>");
+        sb.appendEscaped("Load"); // TODO: BMB - Create link that requests back to the server for this ID,
+        // and loads that JSON
+        sb.appendHtmlConstant("</td></tr><tr><td>");
+        sb.appendEscaped("Loaded  " + DATE_TIME_FORMAT_MED_NO_SECS.format(new Date(value.getCreateDtg())));
+        sb.appendHtmlConstant("</td>");
+        sb.appendHtmlConstant("</tr></table>");
+      }
+    }
   }
 }
