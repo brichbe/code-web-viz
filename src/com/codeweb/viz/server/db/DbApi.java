@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import com.codeweb.viz.server.db.dao.SsaProjectDao;
 import com.codeweb.viz.server.log.LoggerFactory;
 
-// TODO: BMB - commit lib jars
 public class DbApi
 {
   private static final Logger LOG = LoggerFactory.createLogger(DbApi.class);
