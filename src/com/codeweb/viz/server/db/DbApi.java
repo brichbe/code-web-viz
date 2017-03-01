@@ -17,7 +17,7 @@ public class DbApi
 
   public static synchronized void init()
   {
-    com.objectdb.Enhancer.enhance("com.codeweb.viz.shared.dao.*");
+    com.objectdb.Enhancer.enhance("com.codeweb.viz.server.db.dao.*");
 
     ssaProjectsEmf = Persistence.createEntityManagerFactory("$objectdb/db/ssaProjects.odb");
   }
