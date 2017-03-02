@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.codeweb.viz.client.CodeWebViz;
 import com.codeweb.viz.client.js.GwtToJsDispatch;
-import com.codeweb.viz.client.layout.NetworkLayoutManager;
+import com.codeweb.viz.client.ssa.layout.SsaNetworkLayoutManager;
 import com.codeweb.viz.client.ssa.search.SsaNetworkSearchPopupPanel;
 import com.codeweb.viz.client.upload.SsaLoadProjectPopupPanel;
 import com.codeweb.viz.shared.serviceapi.SsaProjectsService;
@@ -60,8 +60,8 @@ public class SsaManager
         searchableItemLabelToId.put(nodeVal.get("label").isString().stringValue(), nodeVal.get("id").isString().stringValue());
       }
       SsaNetworkSearchPopupPanel.get().updateSearchableItems(searchableItemLabelToId);
-      NetworkLayoutManager.clearNetwork();
-      NetworkLayoutManager.displayNetwork(loadedSsaProject);
+      SsaNetworkLayoutManager.clearNetwork();
+      SsaNetworkLayoutManager.displayNetwork(loadedSsaProject);
     }
     catch (Exception e)
     {

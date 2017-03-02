@@ -1,6 +1,6 @@
 package com.codeweb.viz.client.ssa;
 
-import com.codeweb.viz.client.layout.NetworkLayoutManager;
+import com.codeweb.viz.client.ssa.layout.SsaNetworkLayoutManager;
 import com.codeweb.viz.client.ssa.search.SsaNetworkSearchPopupPanel;
 import com.codeweb.viz.client.upload.SsaLoadProjectPopupPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -37,7 +37,7 @@ public class SsaProjectMenuBar extends HorizontalPanel
       @Override
       public void onClick(ClickEvent event)
       {
-        boolean hierLayout = NetworkLayoutManager.toggleHierarchicalLayout();
+        boolean hierLayout = SsaNetworkLayoutManager.toggleHierarchicalLayout();
         if (hierLayout)
         {
           toggleNetworkLayoutBtn.setHTML("<img src=\"images/molecule.png\" class=\"ssaProjMenuPanelBtnImg\"/>");

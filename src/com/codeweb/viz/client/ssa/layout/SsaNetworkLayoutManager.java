@@ -1,4 +1,4 @@
-package com.codeweb.viz.client.layout;
+package com.codeweb.viz.client.ssa.layout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class NetworkLayoutManager
+public class SsaNetworkLayoutManager
 {
   private static final SsaProjectMenuBar ssaProjectMenuBar = new SsaProjectMenuBar();
 
@@ -49,7 +49,7 @@ public class NetworkLayoutManager
     final JSONArray nodesArray = ssaNetworkData.getNetworkNodes();
     final JSONArray edgesArray = ssaNetworkData.getNetworkEdges();
     final int totalNetworkObjs = nodesArray.size() + edgesArray.size();
-    final NetworkBuiltCallback completionCallback = new NetworkBuiltCallback()
+    final INetworkBuildingCallback completionCallback = new INetworkBuildingCallback()
     {
       @Override
       public void onNetworkBuildComplete()
@@ -76,7 +76,7 @@ public class NetworkLayoutManager
 
   // TODO: BMB - Reassess this logic/performance with the next VisJs version.
   private static void buildNetworkAllAtOnce(final JSONArray nodesArray, final JSONArray edgesArray,
-      final NetworkBuiltCallback callback)
+      final INetworkBuildingCallback callback)
   {
     GwtToJsDispatch.showNetworkIndeterminateProgress();
     final Timer delayTimer = new Timer()
@@ -107,7 +107,7 @@ public class NetworkLayoutManager
   }
 
   private static void buildNetworkByChunks(final JSONArray nodesArray, final JSONArray edgesArray,
-      final NetworkBuiltCallback callback)
+      final INetworkBuildingCallback callback)
   {
     GwtToJsDispatch.showNetworkDeterminateProgress();
 
@@ -211,10 +211,5 @@ public class NetworkLayoutManager
       displayNetwork(networkData);
     }
     return layoutAsHierarchical;
-  }
-
-  private static interface NetworkBuiltCallback
-  {
-    void onNetworkBuildComplete();
   }
 }

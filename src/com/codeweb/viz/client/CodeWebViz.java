@@ -1,7 +1,7 @@
 package com.codeweb.viz.client;
 
 import com.codeweb.viz.client.js.JsToGwtDispatch;
-import com.codeweb.viz.client.layout.NetworkLayoutManager;
+import com.codeweb.viz.client.ssa.layout.SsaNetworkLayoutManager;
 import com.codeweb.viz.client.upload.SsaLoadProjectPopupPanel;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
@@ -21,7 +21,7 @@ public class CodeWebViz implements EntryPoint
   {
     Window.enableScrolling(false);
     JsToGwtDispatch.exposeMethods();
-    NetworkLayoutManager.init();
+    SsaNetworkLayoutManager.init();
     SsaLoadProjectPopupPanel.show(false);
     // TODO: BMB - when loading REM, shown Grapd2D with background areas for each package,
     // and bars inside each of those representing the number of times each class in that package
