@@ -2,7 +2,10 @@ package com.codeweb.viz.client.upload;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import com.codeweb.viz.client.CodeWebViz;
 import com.codeweb.viz.client.js.GwtToJsDispatch;
@@ -205,8 +208,16 @@ public class SsaLoadProjectPopupPanel
       public void onSuccess(Collection<SavedSsaProjectDto> result)
       {
         savedSsaProjectsDataProvider.getList().clear();
-        // TODO: BMB - sort list by name
-        savedSsaProjectsDataProvider.setList(new ArrayList<SavedSsaProjectDto>(result));
+        List<SavedSsaProjectDto> newList = new ArrayList<SavedSsaProjectDto>(result);
+        Collections.sort(newList, new Comparator<SavedSsaProjectDto>()
+        {
+          @Override
+          public int compare(SavedSsaProjectDto o1, SavedSsaProjectDto o2)
+          {
+            return o1.getName().compareToIgnoreCase(o2.getName());
+          }
+        });
+        savedSsaProjectsDataProvider.setList(newList);
       }
 
       @Override
