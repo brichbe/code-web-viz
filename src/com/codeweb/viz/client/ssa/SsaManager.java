@@ -3,25 +3,43 @@ package com.codeweb.viz.client.ssa;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.codeweb.viz.client.CodeWebViz;
 import com.codeweb.viz.client.js.GwtToJsDispatch;
 import com.codeweb.viz.client.layout.NetworkLayoutManager;
 import com.codeweb.viz.client.ssa.search.SsaNetworkSearchPopupPanel;
 import com.codeweb.viz.client.upload.SsaLoadProjectPopupPanel;
+import com.codeweb.viz.shared.serviceapi.SsaProjectsService;
+import com.codeweb.viz.shared.serviceapi.SsaProjectsServiceAsync;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 // TODO: BMB - handle right clicks on network nodes with initial option to focus
 // on
 public class SsaManager
 {
+  private static final SsaProjectsServiceAsync ssaSvc = GWT.create(SsaProjectsService.class);
   private static SsaProjectNetworkData loadedSsaProject = null;
 
-  public static void handleLoadSsaProject(String id)
+  public static void loadSsaProject(String id)
   {
-    GWT.log("SSA Manager told to load project: " + id);
-    // TODO: BMB - 
+    ssaSvc.getNetworkJsonForProject(id, new AsyncCallback<String>()
+    {
+      @Override
+      public void onSuccess(String result)
+      {
+        handleSsaFileLoaded(result);
+      }
+
+      @Override
+      public void onFailure(Throwable caught)
+      {
+        GWT.log("Failed to get network JSON", caught);
+        GwtToJsDispatch.promptError("Failed to load network data", CodeWebViz.SERVER_ERROR);
+      }
+    });
   }
 
   public static void handleSsaFileLoaded(String ssaNetworkJson)
@@ -48,7 +66,7 @@ public class SsaManager
     catch (Exception e)
     {
       GWT.log("Failed to parse SSA file load response", e);
-      GwtToJsDispatch.promptError("Data Error", "Unable to render the SSA network data. Try again or choose another file.");
+      GwtToJsDispatch.promptError("Failed to render the SSA network data", CodeWebViz.SERVER_ERROR);
       SsaLoadProjectPopupPanel.show(false);
     }
   }

@@ -35,7 +35,7 @@ public class DbApi
     LOG.info("Close complete");
   }
 
-  public static synchronized void save(SsaProjectDao ssaDao)
+  public static synchronized long save(SsaProjectDao ssaDao)
   {
     EntityManager em = ssaProjectsEmf.createEntityManager();
     try
@@ -43,6 +43,7 @@ public class DbApi
       em.getTransaction().begin();
       em.persist(ssaDao);
       em.getTransaction().commit();
+      return ssaDao.getId();
     }
     finally
     {
@@ -69,5 +70,11 @@ public class DbApi
       }
       em.close();
     }
+  }
+
+  public static synchronized SsaProjectDao getById(long id)
+  {
+    EntityManager em = ssaProjectsEmf.createEntityManager();
+    return em.find(SsaProjectDao.class, id);
   }
 }

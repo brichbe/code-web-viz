@@ -10,4 +10,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface SsaProjectsService extends RemoteService
 {
   Collection<SavedSsaProjectDto> getSavedProjects();
+
+  String getNetworkJsonForProject(String id) throws Exception;
 }

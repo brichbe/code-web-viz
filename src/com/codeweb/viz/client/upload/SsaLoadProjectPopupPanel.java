@@ -16,6 +16,7 @@ import com.codeweb.viz.shared.serviceapi.SsaProjectsServiceAsync;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -51,7 +52,7 @@ import com.google.gwt.view.client.NoSelectionModel;
 // then proceeds to parse and display that network.
 public class SsaLoadProjectPopupPanel
 {
-  public static final DateTimeFormat DATE_TIME_FORMAT_MED_NO_SECS = DateTimeFormat.getFormat("yyyy MMMM d HH:mm");
+  public static final DateTimeFormat DATE_TIME_FORMAT_MED_NO_SECS = DateTimeFormat.getFormat("d MMMM yyyy HH:mm");
   private static final SsaProjectsServiceAsync ssaSvc = GWT.create(SsaProjectsService.class);
   private static boolean allowEscToClose = false;
   private static final PopupPanel popupPanel = new PopupPanel(false);
@@ -156,8 +157,7 @@ public class SsaLoadProjectPopupPanel
         }
 
         hide();
-        String sanitized = result.replaceAll("&lt;", "<").replaceAll("&gt;", ">").replaceAll("\\\\/", "/");
-        SsaManager.handleSsaFileLoaded(sanitized);
+        SsaManager.loadSsaProject(result);
       }
     });
 
@@ -186,6 +186,10 @@ public class SsaLoadProjectPopupPanel
     ssaProjectsList.setSelectionModel(new NoSelectionModel<SavedSsaProjectDto>());
     ssaProjectsList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.DISABLED);
     savedSsaProjectsDataProvider.addDataDisplay(ssaProjectsList);
+
+    Label emptyListLabel = new Label("No records found");
+    emptyListLabel.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
+    ssaProjectsList.setEmptyListWidget(emptyListLabel);
 
     ScrollPanel scroller = new ScrollPanel(ssaProjectsList);
     scroller.setHeight("100px");
@@ -223,7 +227,7 @@ public class SsaLoadProjectPopupPanel
       @Override
       public void onFailure(Throwable caught)
       {
-        GwtToJsDispatch.promptError("Error", "Failed to retrieve the list of saved projects.");
+        GwtToJsDispatch.promptError("Failed retrieving saved projects", CodeWebViz.SERVER_ERROR);
       }
     });
   }
@@ -235,7 +239,7 @@ public class SsaLoadProjectPopupPanel
     populateSavedSsaProjectsList();
   }
 
-  private static synchronized void hide()
+  public static synchronized void hide()
   {
     popupPanel.hide();
   }
