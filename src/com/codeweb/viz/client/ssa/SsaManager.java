@@ -12,10 +12,17 @@ import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 
-// TODO: BMB - handle right clicks on network nodes with initial option to focus on
+// TODO: BMB - handle right clicks on network nodes with initial option to focus
+// on
 public class SsaManager
 {
   private static SsaProjectNetworkData loadedSsaProject = null;
+
+  public static void handleLoadSsaProject(String id)
+  {
+    GWT.log("SSA Manager told to load project: " + id);
+    // TODO: BMB - 
+  }
 
   public static void handleSsaFileLoaded(String ssaNetworkJson)
   {

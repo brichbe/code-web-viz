@@ -1,5 +1,6 @@
 package com.codeweb.viz.client;
 
+import com.codeweb.viz.client.js.JsToGwtDispatch;
 import com.codeweb.viz.client.layout.NetworkLayoutManager;
 import com.codeweb.viz.client.upload.SsaLoadProjectPopupPanel;
 import com.google.gwt.core.client.EntryPoint;
@@ -19,6 +20,7 @@ public class CodeWebViz implements EntryPoint
   public void onModuleLoad()
   {
     Window.enableScrolling(false);
+    JsToGwtDispatch.exposeMethods();
     NetworkLayoutManager.init();
     SsaLoadProjectPopupPanel.show(false);
     // TODO: BMB - when loading REM, shown Grapd2D with background areas for each package,

@@ -245,8 +245,8 @@ public class SsaLoadProjectPopupPanel
         sb.appendHtmlConstant("<tr><td style='font-size:1.2em; font-weight: bold; color: white'>");
         sb.appendEscaped(value.getName());
         sb.appendHtmlConstant("</td><td rowspan='2' style='padding-left: 10px'>");
-        sb.appendEscaped("Load"); // TODO: BMB - Create link that requests back to the server for this ID,
-        // and loads that JSON
+        sb.appendHtmlConstant("<a title=\"Click to load this project\" href=\"javascript:void(0);\" onclick=\"window.JsToGwtLoadSsaProject('"
+            + String.valueOf(value.getId()) + "'); return true;" + "\">Load</a>");
         sb.appendHtmlConstant("</td></tr><tr><td>");
         sb.appendEscaped("Loaded  " + DATE_TIME_FORMAT_MED_NO_SECS.format(new Date(value.getCreateDtg())));
         sb.appendHtmlConstant("</td>");
