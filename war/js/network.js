@@ -55,6 +55,18 @@ function initNetwork(container) {
 	};
 
 	network = new vis.Network(container, data, options);
+	network.on("oncontext", function(params) {
+		params.event.preventDefault();
+		var domPos = params.pointer.DOM;
+		var clickedNodeId = network.getNodeAt({
+			x : domPos.x,
+			y : domPos.y
+		});
+		if (clickedNodeId) {
+			window.JsToGwtHandleNetworkNodeRightClick(clickedNodeId, domPos.x,
+					domPos.y);
+		}
+	});
 	network.on("doubleClick", function(params) {
 		if (params.nodes.length == 1) {
 			if (network.isCluster(params.nodes[0]) == true) {
@@ -165,4 +177,8 @@ function focusNetworkOnItem(id) {
 			duration : 150
 		}
 	});
+}
+
+function selectNetworkNode(id) {
+	network.selectNodes([ id ], true);
 }

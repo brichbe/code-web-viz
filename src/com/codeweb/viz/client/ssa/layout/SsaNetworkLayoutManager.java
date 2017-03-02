@@ -35,6 +35,11 @@ public class SsaNetworkLayoutManager
     GwtToJsDispatch.clearNetworkData();
   }
 
+  public static void handleNetworkNodeRightClick(String id, int clickX, int clickY)
+  {
+    new NetworkNodeContextMenuPopup(id, clickX, clickY);
+  }
+
   public static void displayNetwork(SsaProjectNetworkData ssaNetworkData)
   {
     ssaProjectMenuBar.setEnabled(false);

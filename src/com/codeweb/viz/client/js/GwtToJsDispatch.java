@@ -54,6 +54,11 @@ public class GwtToJsDispatch
 		$wnd.focusNetworkOnItem(id);
   }-*/;
 
+  public static native void selectNetworkNode(String id)
+  /*-{
+		$wnd.selectNetworkNode(id);
+  }-*/;
+
   public static native void logJson(JavaScriptObject json)
   /*-{
 		console.log(JSON.stringify(json, null, 4));

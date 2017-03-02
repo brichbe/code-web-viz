@@ -71,6 +71,7 @@ public class SsaConverter
       JSONObject edgeToParent = new JSONObject();
       edgeToParent.put("from", parentPkg.getName());
       edgeToParent.put("to", pkgId);
+      edgeToParent.put("selectionWidth", 3);
       edgesArray.put(edgeToParent);
     }
 
@@ -94,6 +95,7 @@ public class SsaConverter
       JSONObject edgeToPkg = new JSONObject();
       edgeToPkg.put("from", pkgId);
       edgeToPkg.put("to", srcId);
+      edgeToPkg.put("selectionWidth", 3);
       edgesArray.put(edgeToPkg);
     }
 

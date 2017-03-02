@@ -53,7 +53,9 @@ public class SsaNetworkSearchPopupPanel extends PopupPanel
       @Override
       public void onSelection(SelectionEvent<Suggestion> event)
       {
-        GwtToJsDispatch.focusNetworkOnItem(searchableItemLabelToId.get(event.getSelectedItem().getReplacementString()));
+        String itemId = searchableItemLabelToId.get(event.getSelectedItem().getReplacementString());
+        GwtToJsDispatch.focusNetworkOnItem(itemId);
+        GwtToJsDispatch.selectNetworkNode(itemId);
         hide();
       }
     });

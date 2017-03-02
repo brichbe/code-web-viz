@@ -148,6 +148,20 @@ div.vis-network-tooltip {
 	height: 16px;
 }
 
+.menuItemImage {
+	vertical-align: middle;
+	padding: 1px 4px 1px 4px;
+	width: 18px;
+	height: 18px;
+}
+
+.menuItemWithImage {
+	vertical-align: middle;
+	padding: 3px 4px 3px 6px;
+	border-left: 1px solid rgb(212, 212, 212);
+	margin-left: 4px;
+}
+
 .gwt-PopupPanel {
 	border: 2px solid #00CCFF !important;
 	padding: 2px !important;
