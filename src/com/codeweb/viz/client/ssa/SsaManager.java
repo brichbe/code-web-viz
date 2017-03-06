@@ -16,14 +16,12 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-// TODO: BMB - handle right clicks on network nodes with initial option to focus
-// on
 public class SsaManager
 {
   private static final SsaProjectsServiceAsync ssaSvc = GWT.create(SsaProjectsService.class);
   private static SsaProjectNetworkData loadedSsaProject = null;
 
-  public static void loadSsaProject(String id)
+  public static void loadRemoteSsaProject(String id)
   {
     ssaSvc.getNetworkJsonForProject(id, new AsyncCallback<String>()
     {

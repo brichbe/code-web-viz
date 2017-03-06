@@ -10,6 +10,7 @@ import java.util.List;
 import com.codeweb.viz.client.CodeWebViz;
 import com.codeweb.viz.client.js.GwtToJsDispatch;
 import com.codeweb.viz.client.ssa.SsaManager;
+import com.codeweb.viz.client.util.WidgetUtil;
 import com.codeweb.viz.shared.dto.SavedSsaProjectDto;
 import com.codeweb.viz.shared.serviceapi.SsaProjectsService;
 import com.codeweb.viz.shared.serviceapi.SsaProjectsServiceAsync;
@@ -36,7 +37,6 @@ import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -45,7 +45,7 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
-import com.google.gwt.view.client.NoSelectionModel;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 // TODO: BMB - Also support uploading a zip file that contains src,
 // extracts on server, and creates the SSA file from it,
@@ -67,7 +67,7 @@ public class SsaLoadProjectPopupPanel
     VerticalPanel vPanel = new VerticalPanel();
     vPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
     vPanel.add(createSsaFileUploadPanel());
-    vPanel.add(createHrSeparator());
+    vPanel.add(WidgetUtil.createHrWithText("OR"));
     vPanel.add(createSsaProjectsList());
     popupPanel.setWidget(vPanel);
 
@@ -157,7 +157,7 @@ public class SsaLoadProjectPopupPanel
         }
 
         hide();
-        SsaManager.loadSsaProject(result);
+        SsaManager.loadRemoteSsaProject(result);
       }
     });
 
@@ -170,11 +170,6 @@ public class SsaLoadProjectPopupPanel
     return mainPanel;
   }
 
-  private static Widget createHrSeparator()
-  {
-    return new HTML("<div id=\"hrWithCenterText\">OR</div>");
-  }
-
   private static Widget createSsaProjectsList()
   {
     Label headerLabel = new Label("Load an Existing SSA Project");
@@ -183,7 +178,7 @@ public class SsaLoadProjectPopupPanel
     CellList<SavedSsaProjectDto> ssaProjectsList = new CellList<SavedSsaProjectDto>(new SavedSsaProjectCell());
     ssaProjectsList.getElement().getStyle().setProperty("margin", "auto");
     ssaProjectsList.setTitle("Choose an existing project to load");
-    ssaProjectsList.setSelectionModel(new NoSelectionModel<SavedSsaProjectDto>());
+    ssaProjectsList.setSelectionModel(new SingleSelectionModel<SavedSsaProjectDto>());
     ssaProjectsList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.DISABLED);
     savedSsaProjectsDataProvider.addDataDisplay(ssaProjectsList);
 
@@ -260,7 +255,7 @@ public class SsaLoadProjectPopupPanel
         sb.appendHtmlConstant("<tr><td style='font-size:1.2em; font-weight: bold; color: white'>");
         sb.appendEscaped(value.getName());
         sb.appendHtmlConstant("</td><td rowspan='2' style='padding-left: 10px'>");
-        sb.appendHtmlConstant("<a title=\"Click to load this project\" href=\"javascript:void(0);\" onclick=\"window.JsToGwtLoadSsaProject('"
+        sb.appendHtmlConstant("<a title=\"Load this project\" href=\"javascript:void(0);\" onclick=\"window.JsToGwtLoadSsaProject('"
             + String.valueOf(value.getId()) + "'); return true;" + "\">Load</a>");
         sb.appendHtmlConstant("</td></tr><tr><td>");
         sb.appendEscaped("Loaded  " + DATE_TIME_FORMAT_MED_NO_SECS.format(new Date(value.getCreateDtg())));

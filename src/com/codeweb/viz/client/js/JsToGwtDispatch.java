@@ -6,7 +6,7 @@ public class JsToGwtDispatch
   /*-{
 		$wnd.JsToGwtLoadSsaProject = function(id) {
 			@com.codeweb.viz.client.upload.SsaLoadProjectPopupPanel::hide()();
-			@com.codeweb.viz.client.ssa.SsaManager::loadSsaProject(Ljava/lang/String;)(id);
+			@com.codeweb.viz.client.ssa.SsaManager::loadRemoteSsaProject(Ljava/lang/String;)(id);
 		}
 
 		$wnd.JsToGwtHandleNetworkNodeRightClick = function(id, clickX, clickY) {

@@ -176,6 +176,11 @@ div.vis-network-tooltip {
 	z-index: 99;
 }
 
+.com-google-gwt-user-cellview-client-CellList-Style-cellListEvenItem,
+	.com-google-gwt-user-cellview-client-CellList-Style-cellListOddItem {
+	cursor: default !important;
+}
+
 [disabled].gwt-Button {
 	opacity: 0.2 !important;
 }
