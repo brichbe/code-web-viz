@@ -18,6 +18,11 @@ public class SsaConverter
     return new Gson().fromJson(ssaJson, ProjectStructure.class);
   }
 
+  public static String getJson(ProjectStructure project)
+  {
+    return new Gson().toJson(project);
+  }
+
   public static JSONObject createSsaNetworkJson(ProjectStructure project) throws Exception
   {
     JSONArray nodesArray = new JSONArray();

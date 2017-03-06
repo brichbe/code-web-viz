@@ -1,6 +1,7 @@
 package com.codeweb.viz.server.service;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
@@ -15,6 +16,7 @@ import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
 
+import com.codeweb.ssa.SSA;
 import com.codeweb.ssa.model.ProjectStructure;
 import com.codeweb.viz.server.db.DbApi;
 import com.codeweb.viz.server.db.dao.SsaProjectDao;
@@ -55,6 +57,28 @@ public class SsaFileUploadServlet extends HttpServlet
           long savedId = persist(project, uploadFileContents);
           resp.getWriter().write(String.valueOf(savedId));
           resp.getWriter().flush();
+          break;
+        }
+        else if ("upload_compressed".equalsIgnoreCase(item.getFieldName()))
+        {
+          InputStream stream = item.openStream();
+
+          ByteArrayOutputStream out = new ByteArrayOutputStream();
+          int len;
+          byte[] buffer = new byte[8192];
+          while ((len = stream.read(buffer, 0, buffer.length)) != -1)
+          {
+            out.write(buffer, 0, len);
+          }
+
+          String extractTo = item.getName();
+          out.writeTo(new FileOutputStream(extractTo));
+          SSA ssa = SSA.fromArchive(extractTo);
+          ProjectStructure project = ssa.getProjStructure();
+          long savedId = persist(project, SsaConverter.getJson(project));
+          resp.getWriter().write(String.valueOf(savedId));
+          resp.getWriter().flush();
+          // TODO: BMB - use try/finally to delete the zip
           break;
         }
       }

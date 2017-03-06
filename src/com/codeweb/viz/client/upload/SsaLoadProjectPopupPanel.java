@@ -47,9 +47,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 
-// TODO: BMB - Also support uploading a zip file that contains src,
-// extracts on server, and creates the SSA file from it,
-// then proceeds to parse and display that network.
 public class SsaLoadProjectPopupPanel
 {
   public static final DateTimeFormat DATE_TIME_FORMAT_MED_NO_SECS = DateTimeFormat.getFormat("d MMMM yyyy HH:mm");
@@ -67,6 +64,8 @@ public class SsaLoadProjectPopupPanel
     VerticalPanel vPanel = new VerticalPanel();
     vPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
     vPanel.add(createSsaFileUploadPanel());
+    vPanel.add(WidgetUtil.createHrWithText("OR"));
+    vPanel.add(createSrcArchiveUploadPanel());
     vPanel.add(WidgetUtil.createHrWithText("OR"));
     vPanel.add(createSsaProjectsList());
     popupPanel.setWidget(vPanel);
@@ -170,9 +169,88 @@ public class SsaLoadProjectPopupPanel
     return mainPanel;
   }
 
+  private static Widget createSrcArchiveUploadPanel()
+  {
+    Label headerLabel = new Label("Upload Source Archive File (.zip)");
+    headerLabel.getElement().addClassName("fileUploadHeaderLabel");
+
+    Image img = new Image("images/upload_compressed.png");
+    img.getElement().setId("fileUploadPopupPanelImg");
+    img.setTitle("Choose file to upload");
+
+    final FormPanel fileUploadForm = new FormPanel();
+    fileUploadForm.setEncoding(FormPanel.ENCODING_MULTIPART);
+    fileUploadForm.setMethod(FormPanel.METHOD_POST);
+    fileUploadForm.setAction(GWT.getModuleBaseURL() + "ssaFileUpload");
+    fileUploadForm.setVisible(false);
+    final FileUpload fileUpload = new FileUpload();
+    fileUpload.setName("upload_compressed");
+    fileUpload.getElement().getStyle().setPosition(Position.RELATIVE);
+    fileUploadForm.add(fileUpload);
+
+    fileUpload.addChangeHandler(new ChangeHandler()
+    {
+      @Override
+      public void onChange(ChangeEvent event)
+      {
+        fileUploadForm.submit();
+      }
+    });
+
+    img.addClickHandler(new ClickHandler()
+    {
+      @Override
+      public void onClick(ClickEvent event)
+      {
+        fileUpload.click();
+      }
+    });
+
+    fileUploadForm.addSubmitCompleteHandler(new SubmitCompleteHandler()
+    {
+      @Override
+      public void onSubmitComplete(SubmitCompleteEvent event)
+      {
+        final String result = event.getResults();
+        if (result == null)
+        {
+          GwtToJsDispatch.promptError("Connection Error", CodeWebViz.SERVER_ERROR);
+          return;
+        }
+        if (result.trim().isEmpty())
+        {
+          String filename = fileUpload.getFilename();
+          int index = filename.lastIndexOf('\\');
+          if (index != -1)
+          {
+            filename = filename.substring(index + 1);
+          }
+          index = filename.lastIndexOf('/');
+          if (index != -1)
+          {
+            filename = filename.substring(index + 1);
+          }
+          GwtToJsDispatch.promptError("Invalid File", "The selected file (" + filename + ") is not a valid source archive file.");
+          return;
+        }
+
+        hide();
+        SsaManager.loadRemoteSsaProject(result);
+      }
+    });
+
+    DockPanel mainPanel = new DockPanel();
+    mainPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+    mainPanel.setSpacing(8);
+    mainPanel.add(headerLabel, DockPanel.NORTH);
+    mainPanel.add(img, DockPanel.CENTER);
+    mainPanel.add(fileUploadForm, DockPanel.SOUTH);
+    return mainPanel;
+  }
+
   private static Widget createSsaProjectsList()
   {
-    Label headerLabel = new Label("Load an Existing SSA Project");
+    Label headerLabel = new Label("Load an Existing Project");
     headerLabel.getElement().addClassName("fileUploadHeaderLabel");
 
     CellList<SavedSsaProjectDto> ssaProjectsList = new CellList<SavedSsaProjectDto>(new SavedSsaProjectCell());
@@ -188,12 +266,14 @@ public class SsaLoadProjectPopupPanel
 
     ScrollPanel scroller = new ScrollPanel(ssaProjectsList);
     scroller.setHeight("100px");
+    scroller.setWidth("250px");
     scroller.getElement().getStyle().setProperty("border", "3px groove lightgray");
     scroller.getElement().getStyle().setProperty("borderRadius", "4px");
     scroller.getElement().getStyle().setMargin(8, Unit.PX);
     scroller.getElement().getStyle().setPadding(4, Unit.PX);
 
     VerticalPanel panel = new VerticalPanel();
+    panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
     panel.add(headerLabel);
     panel.add(scroller);
     return panel;
