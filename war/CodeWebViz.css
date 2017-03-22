@@ -1,6 +1,6 @@
 body {
-	background: url("images/gray_texture_bg.png") no-repeat center center
-		fixed !important;
+	background: url("images/network_bg.png") no-repeat center center fixed
+		!important;
 	-webkit-background-size: cover !important;
 	-moz-background-size: cover !important;
 	-o-background-size: cover !important;
@@ -39,8 +39,6 @@ body {
 }
 
 #vizSourceStructureNetwork {
-	background-image: url("images/network_bg.png") !important;
-	background-repeat: no-repeat !important;
 	border: 2px solid #67768A;
 	box-shadow: 0px 0px 4px 2px #345F7D;
 	position: fixed;
