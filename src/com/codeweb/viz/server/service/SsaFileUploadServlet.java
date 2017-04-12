@@ -1,6 +1,7 @@
 package com.codeweb.viz.server.service;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,11 +24,11 @@ import com.codeweb.viz.server.db.dao.SsaProjectDao;
 import com.codeweb.viz.server.log.LoggerFactory;
 import com.codeweb.viz.server.util.SsaConverter;
 
-// TODO: BMB - separate project that makes a customizable matrix animation
 public class SsaFileUploadServlet extends HttpServlet
 {
   private static final long serialVersionUID = 6479188937373775788L;
 
+  private static final String TEMP_OUT_DIR = System.getProperty("java.io.tmpdir", "temp");
   private static final Logger LOG = LoggerFactory.createLogger(SsaFileUploadServlet.class);
 
   @Override
@@ -72,13 +73,23 @@ public class SsaFileUploadServlet extends HttpServlet
           }
 
           String extractTo = item.getName();
-          out.writeTo(new FileOutputStream(extractTo));
-          SSA ssa = SSA.fromArchive(extractTo);
-          ProjectStructure project = ssa.getProjStructure();
-          long savedId = persist(project, SsaConverter.getJson(project));
-          resp.getWriter().write(String.valueOf(savedId));
-          resp.getWriter().flush();
-          // TODO: BMB - use try/finally to delete the zip
+          File file = new File(TEMP_OUT_DIR, extractTo);
+          try (FileOutputStream fileOut = new FileOutputStream(file))
+          {
+            out.writeTo(fileOut);
+            SSA ssa = SSA.fromArchive(file.getAbsolutePath());
+            ProjectStructure project = ssa.getProjStructure();
+            long savedId = persist(project, SsaConverter.getJson(project));
+            resp.getWriter().write(String.valueOf(savedId));
+            resp.getWriter().flush();
+          }
+          finally
+          {
+            if (!file.delete())
+            {
+              file.deleteOnExit();
+            }
+          }
           break;
         }
       }
