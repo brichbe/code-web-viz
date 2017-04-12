@@ -1,6 +1,5 @@
-package com.codeweb.viz.client.ssa;
+package com.codeweb.viz.client.ssa.layout;
 
-import com.codeweb.viz.client.ssa.layout.SsaNetworkLayoutManager;
 import com.codeweb.viz.client.ssa.search.SsaNetworkSearchPopupPanel;
 import com.codeweb.viz.client.upload.SsaLoadProjectPopupPanel;
 import com.google.gwt.event.dom.client.ClickEvent;

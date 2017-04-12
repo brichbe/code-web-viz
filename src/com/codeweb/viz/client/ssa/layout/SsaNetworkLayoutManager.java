@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.codeweb.viz.client.js.GwtToJsDispatch;
 import com.codeweb.viz.client.ssa.SsaManager;
-import com.codeweb.viz.client.ssa.SsaProjectMenuBar;
 import com.codeweb.viz.client.ssa.SsaProjectNetworkData;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
