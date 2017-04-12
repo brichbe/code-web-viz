@@ -56,6 +56,7 @@ public class SsaFileUploadServlet extends HttpServlet
           String uploadFileContents = new String(out.toByteArray());
           ProjectStructure project = SsaConverter.parseSsaJson(uploadFileContents);
           long savedId = persist(project, uploadFileContents);
+          resp.setContentType("text/html");
           resp.getWriter().write(String.valueOf(savedId));
           resp.getWriter().flush();
           break;
@@ -80,6 +81,7 @@ public class SsaFileUploadServlet extends HttpServlet
             SSA ssa = SSA.fromArchive(file.getAbsolutePath());
             ProjectStructure project = ssa.getProjStructure();
             long savedId = persist(project, SsaConverter.getJson(project));
+            resp.setContentType("text/html");
             resp.getWriter().write(String.valueOf(savedId));
             resp.getWriter().flush();
           }
